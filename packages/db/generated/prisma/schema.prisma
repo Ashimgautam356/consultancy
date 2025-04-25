@@ -153,7 +153,7 @@ model Student {
   paymentStatus      PaymentStatus @default(PENDING)
   profileCompleted   Boolean       @default(false)
   createdAt          DateTime      @default(now())
-  updatedAt          DateTime
+  updatedAt          DateTime      @updatedAt
   address            String?
 }
 

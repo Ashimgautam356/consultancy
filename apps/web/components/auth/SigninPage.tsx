@@ -22,17 +22,8 @@ export default function Signin() {
             redirect:true, 
             email, 
             password, 
-            callbackUrl:"/"
+            callbackUrl:"/dashboard"
         })
-        console.log(res)
-    //   axios.post("http://localhost:3005/api/v1/student/signin",{email,password},{withCredentials:true}).then(res=>{
-    //     if(res.status==200){
-
-    //       router.push("/dashboard")
-    //       localStorage.setItem("token",res.data.token)
-    //       localStorage.setItem("userInfo",JSON.stringify(res.data.userInfo))
-    //     }
-    //   })
       
     }catch(err){
       console.log(err)

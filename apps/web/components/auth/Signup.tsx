@@ -46,7 +46,7 @@ export default function SignupPage() {
           phone:phone,
           password:password
         }).then(res=> {if(res.status===200){
-          router.push('/auth/login')
+          router.push('/signin')
         }})
     }catch(err){
       console.log(err)

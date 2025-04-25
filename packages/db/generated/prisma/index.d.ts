@@ -22928,7 +22928,7 @@ export namespace Prisma {
     paymentStatus?: $Enums.PaymentStatus
     profileCompleted?: boolean
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
     address?: string | null
   }
 
@@ -22945,7 +22945,7 @@ export namespace Prisma {
     paymentStatus?: $Enums.PaymentStatus
     profileCompleted?: boolean
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
     address?: string | null
   }
 
@@ -22995,7 +22995,7 @@ export namespace Prisma {
     paymentStatus?: $Enums.PaymentStatus
     profileCompleted?: boolean
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
     address?: string | null
   }
 
