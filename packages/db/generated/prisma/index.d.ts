@@ -134,9 +134,7 @@ export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
 export const Role: {
   STUDENT: 'STUDENT',
   ADMIN: 'ADMIN',
-  DOC_MANAGER: 'DOC_MANAGER',
-  INSTRUCTOR: 'INSTRUCTOR',
-  RECEPTIONIST: 'RECEPTIONIST'
+  EMPLOYEE: 'EMPLOYEE'
 };
 
 export type Role = (typeof Role)[keyof typeof Role]

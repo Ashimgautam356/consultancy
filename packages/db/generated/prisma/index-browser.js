@@ -288,9 +288,7 @@ exports.Prisma.NullsOrder = {
 exports.Role = exports.$Enums.Role = {
   STUDENT: 'STUDENT',
   ADMIN: 'ADMIN',
-  DOC_MANAGER: 'DOC_MANAGER',
-  INSTRUCTOR: 'INSTRUCTOR',
-  RECEPTIONIST: 'RECEPTIONIST'
+  EMPLOYEE: 'EMPLOYEE'
 };
 
 exports.ChatType = exports.$Enums.ChatType = {

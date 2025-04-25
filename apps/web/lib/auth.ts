@@ -2,6 +2,7 @@ import { Session } from "node:inspector/promises";
 import  CredentialsProvider from "next-auth/providers/credentials";
 import {prismaClient as prisma} from '@repo/db/client'
 import jwt from 'jsonwebtoken'
+import bcrypt from 'bcrypt'
 
 
 export interface session extends Session {
@@ -38,23 +39,86 @@ export const authOptions = {
                     
                       if (!user) return null;
                     
-                    //   const isValid = await bcrypt.compare(credentials.password, user.password);
-                    //   if (!isValid) return null;
+                      // now see who is the user and fethch the password and then login
+                      const role = user.role; 
+                      if(role == "EMPLOYEE"){
+                        
+                        // employee login 
+                        const studentInfo = await prisma.employee.findUnique({
+                            where:{email:credentials.email},
+                        })
+                         
+                        const isValid = await bcrypt.compare(credentials.password, studentInfo.password);
+                        if (!isValid) return null;
+                      
+                        const myjwt = jwt.sign({ id: user.id },process.env.JWT_SECRET!,{expiresIn:'365d'});
+          
+                        await prisma.user.update({
+                          where: { id: user.id },
+                          data: { token: myjwt },
+                        });
+                      
+                        return {
+                          id: user.id,
+                          name: user.name,
+                          email: user.email,
+                          token: myjwt,
+                          role: user.role,
+                        };
+
+                      }
+                      if(role == "ADMIN"){
+
+                        // admin login
+                        const adminInfo = await prisma.admin.findUnique({
+                            where:{email:credentials.email},
+                        })
+                         
+                        const isValid = await bcrypt.compare(credentials.password, adminInfo.password);
+                        if (!isValid) return null;
+                      
+                        const myjwt = jwt.sign({ id: user.id },process.env.JWT_SECRET!,{expiresIn:'365d'});
+          
+                        await prisma.user.update({
+                          where: { id: user.id },
+                          data: { token: myjwt },
+                        });
+                      
+                        return {
+                          id: user.id,
+                          name: user.name,
+                          email: user.email,
+                          token: myjwt,
+                          role: user.role,
+                        };
+                      }else{
+
+                        // student login
+                        const studentInfo = await prisma.employee.findUnique({
+                            where:{email:credentials.email},
+                        })
+                         
+                        const isValid = await bcrypt.compare(credentials.password, studentInfo.password);
+                        if (!isValid) return null;
+                      
+                        const myjwt = jwt.sign({ id: user.id },process.env.JWT_SECRET!,{expiresIn:'365d'});
+          
+                        await prisma.user.update({
+                          where: { id: user.id },
+                          data: { token: myjwt },
+                        });
+                      
+                        return {
+                          id: user.id,
+                          name: user.name,
+                          email: user.email,
+                          token: myjwt,
+                          role: user.role,
+                        };
+                      }
+                      
                     
-                      const myjwt = jwt.sign({ id: user.id },process.env.JWT_SECRET!,{expiresIn:'365d'});
-        
-                      await prisma.user.update({
-                        where: { id: user.id },
-                        data: { token: myjwt },
-                      });
-                    
-                      return {
-                        id: user.id,
-                        name: user.name,
-                        email: user.email,
-                        token: myjwt,
-                        role: user.role,
-                      };
+
                 }catch(err){
                     console.log(err)
                 }

@@ -88,7 +88,7 @@ model Employee {
   email        String   @unique
   passwordHash String
   phone        String
-  role         Role     @default(INSTRUCTOR)
+  role         Role     @default(EMPLOYEE)
   createdAt    DateTime @default(now())
   updatedAt    DateTime
   address      String?
@@ -221,9 +221,7 @@ enum PaymentStatus {
 enum Role {
   STUDENT
   ADMIN
-  DOC_MANAGER
-  INSTRUCTOR
-  RECEPTIONIST
+  EMPLOYEE
 }
 
 enum SessionStatus {
