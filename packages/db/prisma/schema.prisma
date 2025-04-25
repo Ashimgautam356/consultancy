@@ -183,6 +183,8 @@ model User {
   role                   Role                     @default(STUDENT)
   imgPublicId            String?
   imgUrl                 String?
+  token                  String?
+
   Blog                   Blog[]
   Chat                   Chat[]
   ChatParticipant        ChatParticipant[]

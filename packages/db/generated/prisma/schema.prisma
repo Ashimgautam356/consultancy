@@ -177,12 +177,14 @@ model Universities {
 }
 
 model User {
-  id                     Int                      @id @default(autoincrement())
-  name                   String
-  email                  String                   @unique
-  role                   Role                     @default(STUDENT)
-  imgPublicId            String?
-  imgUrl                 String?
+  id          Int     @id @default(autoincrement())
+  name        String
+  email       String  @unique
+  role        Role    @default(STUDENT)
+  imgPublicId String?
+  imgUrl      String?
+  token       String?
+
   Blog                   Blog[]
   Chat                   Chat[]
   ChatParticipant        ChatParticipant[]

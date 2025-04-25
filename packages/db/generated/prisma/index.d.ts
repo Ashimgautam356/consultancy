@@ -19319,6 +19319,7 @@ export namespace Prisma {
     role: $Enums.Role | null
     imgPublicId: string | null
     imgUrl: string | null
+    token: string | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -19328,6 +19329,7 @@ export namespace Prisma {
     role: $Enums.Role | null
     imgPublicId: string | null
     imgUrl: string | null
+    token: string | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -19337,6 +19339,7 @@ export namespace Prisma {
     role: number
     imgPublicId: number
     imgUrl: number
+    token: number
     _all: number
   }
 
@@ -19356,6 +19359,7 @@ export namespace Prisma {
     role?: true
     imgPublicId?: true
     imgUrl?: true
+    token?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -19365,6 +19369,7 @@ export namespace Prisma {
     role?: true
     imgPublicId?: true
     imgUrl?: true
+    token?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -19374,6 +19379,7 @@ export namespace Prisma {
     role?: true
     imgPublicId?: true
     imgUrl?: true
+    token?: true
     _all?: true
   }
 
@@ -19470,6 +19476,7 @@ export namespace Prisma {
     role: $Enums.Role
     imgPublicId: string | null
     imgUrl: string | null
+    token: string | null
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -19498,6 +19505,7 @@ export namespace Prisma {
     role?: boolean
     imgPublicId?: boolean
     imgUrl?: boolean
+    token?: boolean
     Blog?: boolean | User$BlogArgs<ExtArgs>
     Chat?: boolean | User$ChatArgs<ExtArgs>
     ChatParticipant?: boolean | User$ChatParticipantArgs<ExtArgs>
@@ -19518,6 +19526,7 @@ export namespace Prisma {
     role?: boolean
     imgPublicId?: boolean
     imgUrl?: boolean
+    token?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -19527,6 +19536,7 @@ export namespace Prisma {
     role?: boolean
     imgPublicId?: boolean
     imgUrl?: boolean
+    token?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -19536,9 +19546,10 @@ export namespace Prisma {
     role?: boolean
     imgPublicId?: boolean
     imgUrl?: boolean
+    token?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "role" | "imgPublicId" | "imgUrl", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "role" | "imgPublicId" | "imgUrl" | "token", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Blog?: boolean | User$BlogArgs<ExtArgs>
     Chat?: boolean | User$ChatArgs<ExtArgs>
@@ -19576,6 +19587,7 @@ export namespace Prisma {
       role: $Enums.Role
       imgPublicId: string | null
       imgUrl: string | null
+      token: string | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -20015,6 +20027,7 @@ export namespace Prisma {
     readonly role: FieldRef<"User", 'Role'>
     readonly imgPublicId: FieldRef<"User", 'String'>
     readonly imgUrl: FieldRef<"User", 'String'>
+    readonly token: FieldRef<"User", 'String'>
   }
     
 
@@ -20870,7 +20883,8 @@ export namespace Prisma {
     email: 'email',
     role: 'role',
     imgPublicId: 'imgPublicId',
-    imgUrl: 'imgUrl'
+    imgUrl: 'imgUrl',
+    token: 'token'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -22071,6 +22085,7 @@ export namespace Prisma {
     role?: EnumRoleFilter<"User"> | $Enums.Role
     imgPublicId?: StringNullableFilter<"User"> | string | null
     imgUrl?: StringNullableFilter<"User"> | string | null
+    token?: StringNullableFilter<"User"> | string | null
     Blog?: BlogListRelationFilter
     Chat?: ChatListRelationFilter
     ChatParticipant?: ChatParticipantListRelationFilter
@@ -22090,6 +22105,7 @@ export namespace Prisma {
     role?: SortOrder
     imgPublicId?: SortOrderInput | SortOrder
     imgUrl?: SortOrderInput | SortOrder
+    token?: SortOrderInput | SortOrder
     Blog?: BlogOrderByRelationAggregateInput
     Chat?: ChatOrderByRelationAggregateInput
     ChatParticipant?: ChatParticipantOrderByRelationAggregateInput
@@ -22112,6 +22128,7 @@ export namespace Prisma {
     role?: EnumRoleFilter<"User"> | $Enums.Role
     imgPublicId?: StringNullableFilter<"User"> | string | null
     imgUrl?: StringNullableFilter<"User"> | string | null
+    token?: StringNullableFilter<"User"> | string | null
     Blog?: BlogListRelationFilter
     Chat?: ChatListRelationFilter
     ChatParticipant?: ChatParticipantListRelationFilter
@@ -22131,6 +22148,7 @@ export namespace Prisma {
     role?: SortOrder
     imgPublicId?: SortOrderInput | SortOrder
     imgUrl?: SortOrderInput | SortOrder
+    token?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -22148,6 +22166,7 @@ export namespace Prisma {
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
     imgPublicId?: StringNullableWithAggregatesFilter<"User"> | string | null
     imgUrl?: StringNullableWithAggregatesFilter<"User"> | string | null
+    token?: StringNullableWithAggregatesFilter<"User"> | string | null
   }
 
   export type AdminCreateInput = {
@@ -23132,6 +23151,7 @@ export namespace Prisma {
     role?: $Enums.Role
     imgPublicId?: string | null
     imgUrl?: string | null
+    token?: string | null
     Blog?: BlogCreateNestedManyWithoutUserInput
     Chat?: ChatCreateNestedManyWithoutUserInput
     ChatParticipant?: ChatParticipantCreateNestedManyWithoutUserInput
@@ -23151,6 +23171,7 @@ export namespace Prisma {
     role?: $Enums.Role
     imgPublicId?: string | null
     imgUrl?: string | null
+    token?: string | null
     Blog?: BlogUncheckedCreateNestedManyWithoutUserInput
     Chat?: ChatUncheckedCreateNestedManyWithoutUserInput
     ChatParticipant?: ChatParticipantUncheckedCreateNestedManyWithoutUserInput
@@ -23169,6 +23190,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     imgPublicId?: NullableStringFieldUpdateOperationsInput | string | null
     imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: NullableStringFieldUpdateOperationsInput | string | null
     Blog?: BlogUpdateManyWithoutUserNestedInput
     Chat?: ChatUpdateManyWithoutUserNestedInput
     ChatParticipant?: ChatParticipantUpdateManyWithoutUserNestedInput
@@ -23188,6 +23210,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     imgPublicId?: NullableStringFieldUpdateOperationsInput | string | null
     imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: NullableStringFieldUpdateOperationsInput | string | null
     Blog?: BlogUncheckedUpdateManyWithoutUserNestedInput
     Chat?: ChatUncheckedUpdateManyWithoutUserNestedInput
     ChatParticipant?: ChatParticipantUncheckedUpdateManyWithoutUserNestedInput
@@ -23207,6 +23230,7 @@ export namespace Prisma {
     role?: $Enums.Role
     imgPublicId?: string | null
     imgUrl?: string | null
+    token?: string | null
   }
 
   export type UserUpdateManyMutationInput = {
@@ -23215,6 +23239,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     imgPublicId?: NullableStringFieldUpdateOperationsInput | string | null
     imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -23224,6 +23249,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     imgPublicId?: NullableStringFieldUpdateOperationsInput | string | null
     imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -24254,6 +24280,7 @@ export namespace Prisma {
     role?: SortOrder
     imgPublicId?: SortOrder
     imgUrl?: SortOrder
+    token?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
@@ -24267,6 +24294,7 @@ export namespace Prisma {
     role?: SortOrder
     imgPublicId?: SortOrder
     imgUrl?: SortOrder
+    token?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -24276,6 +24304,7 @@ export namespace Prisma {
     role?: SortOrder
     imgPublicId?: SortOrder
     imgUrl?: SortOrder
+    token?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
@@ -25491,6 +25520,7 @@ export namespace Prisma {
     role?: $Enums.Role
     imgPublicId?: string | null
     imgUrl?: string | null
+    token?: string | null
     Chat?: ChatCreateNestedManyWithoutUserInput
     ChatParticipant?: ChatParticipantCreateNestedManyWithoutUserInput
     Comment?: CommentCreateNestedManyWithoutUserInput
@@ -25509,6 +25539,7 @@ export namespace Prisma {
     role?: $Enums.Role
     imgPublicId?: string | null
     imgUrl?: string | null
+    token?: string | null
     Chat?: ChatUncheckedCreateNestedManyWithoutUserInput
     ChatParticipant?: ChatParticipantUncheckedCreateNestedManyWithoutUserInput
     Comment?: CommentUncheckedCreateNestedManyWithoutUserInput
@@ -25565,6 +25596,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     imgPublicId?: NullableStringFieldUpdateOperationsInput | string | null
     imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: NullableStringFieldUpdateOperationsInput | string | null
     Chat?: ChatUpdateManyWithoutUserNestedInput
     ChatParticipant?: ChatParticipantUpdateManyWithoutUserNestedInput
     Comment?: CommentUpdateManyWithoutUserNestedInput
@@ -25583,6 +25615,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     imgPublicId?: NullableStringFieldUpdateOperationsInput | string | null
     imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: NullableStringFieldUpdateOperationsInput | string | null
     Chat?: ChatUncheckedUpdateManyWithoutUserNestedInput
     ChatParticipant?: ChatParticipantUncheckedUpdateManyWithoutUserNestedInput
     Comment?: CommentUncheckedUpdateManyWithoutUserNestedInput
@@ -25627,6 +25660,7 @@ export namespace Prisma {
     role?: $Enums.Role
     imgPublicId?: string | null
     imgUrl?: string | null
+    token?: string | null
     Blog?: BlogCreateNestedManyWithoutUserInput
     ChatParticipant?: ChatParticipantCreateNestedManyWithoutUserInput
     Comment?: CommentCreateNestedManyWithoutUserInput
@@ -25645,6 +25679,7 @@ export namespace Prisma {
     role?: $Enums.Role
     imgPublicId?: string | null
     imgUrl?: string | null
+    token?: string | null
     Blog?: BlogUncheckedCreateNestedManyWithoutUserInput
     ChatParticipant?: ChatParticipantUncheckedCreateNestedManyWithoutUserInput
     Comment?: CommentUncheckedCreateNestedManyWithoutUserInput
@@ -25721,6 +25756,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     imgPublicId?: NullableStringFieldUpdateOperationsInput | string | null
     imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: NullableStringFieldUpdateOperationsInput | string | null
     Blog?: BlogUpdateManyWithoutUserNestedInput
     ChatParticipant?: ChatParticipantUpdateManyWithoutUserNestedInput
     Comment?: CommentUpdateManyWithoutUserNestedInput
@@ -25739,6 +25775,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     imgPublicId?: NullableStringFieldUpdateOperationsInput | string | null
     imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: NullableStringFieldUpdateOperationsInput | string | null
     Blog?: BlogUncheckedUpdateManyWithoutUserNestedInput
     ChatParticipant?: ChatParticipantUncheckedUpdateManyWithoutUserNestedInput
     Comment?: CommentUncheckedUpdateManyWithoutUserNestedInput
@@ -25834,6 +25871,7 @@ export namespace Prisma {
     role?: $Enums.Role
     imgPublicId?: string | null
     imgUrl?: string | null
+    token?: string | null
     Blog?: BlogCreateNestedManyWithoutUserInput
     Chat?: ChatCreateNestedManyWithoutUserInput
     Comment?: CommentCreateNestedManyWithoutUserInput
@@ -25852,6 +25890,7 @@ export namespace Prisma {
     role?: $Enums.Role
     imgPublicId?: string | null
     imgUrl?: string | null
+    token?: string | null
     Blog?: BlogUncheckedCreateNestedManyWithoutUserInput
     Chat?: ChatUncheckedCreateNestedManyWithoutUserInput
     Comment?: CommentUncheckedCreateNestedManyWithoutUserInput
@@ -25917,6 +25956,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     imgPublicId?: NullableStringFieldUpdateOperationsInput | string | null
     imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: NullableStringFieldUpdateOperationsInput | string | null
     Blog?: BlogUpdateManyWithoutUserNestedInput
     Chat?: ChatUpdateManyWithoutUserNestedInput
     Comment?: CommentUpdateManyWithoutUserNestedInput
@@ -25935,6 +25975,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     imgPublicId?: NullableStringFieldUpdateOperationsInput | string | null
     imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: NullableStringFieldUpdateOperationsInput | string | null
     Blog?: BlogUncheckedUpdateManyWithoutUserNestedInput
     Chat?: ChatUncheckedUpdateManyWithoutUserNestedInput
     Comment?: CommentUncheckedUpdateManyWithoutUserNestedInput
@@ -25978,6 +26019,7 @@ export namespace Prisma {
     role?: $Enums.Role
     imgPublicId?: string | null
     imgUrl?: string | null
+    token?: string | null
     Blog?: BlogCreateNestedManyWithoutUserInput
     Chat?: ChatCreateNestedManyWithoutUserInput
     ChatParticipant?: ChatParticipantCreateNestedManyWithoutUserInput
@@ -25996,6 +26038,7 @@ export namespace Prisma {
     role?: $Enums.Role
     imgPublicId?: string | null
     imgUrl?: string | null
+    token?: string | null
     Blog?: BlogUncheckedCreateNestedManyWithoutUserInput
     Chat?: ChatUncheckedCreateNestedManyWithoutUserInput
     ChatParticipant?: ChatParticipantUncheckedCreateNestedManyWithoutUserInput
@@ -26061,6 +26104,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     imgPublicId?: NullableStringFieldUpdateOperationsInput | string | null
     imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: NullableStringFieldUpdateOperationsInput | string | null
     Blog?: BlogUpdateManyWithoutUserNestedInput
     Chat?: ChatUpdateManyWithoutUserNestedInput
     ChatParticipant?: ChatParticipantUpdateManyWithoutUserNestedInput
@@ -26079,6 +26123,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     imgPublicId?: NullableStringFieldUpdateOperationsInput | string | null
     imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: NullableStringFieldUpdateOperationsInput | string | null
     Blog?: BlogUncheckedUpdateManyWithoutUserNestedInput
     Chat?: ChatUncheckedUpdateManyWithoutUserNestedInput
     ChatParticipant?: ChatParticipantUncheckedUpdateManyWithoutUserNestedInput
@@ -26140,6 +26185,7 @@ export namespace Prisma {
     role?: $Enums.Role
     imgPublicId?: string | null
     imgUrl?: string | null
+    token?: string | null
     Blog?: BlogCreateNestedManyWithoutUserInput
     Chat?: ChatCreateNestedManyWithoutUserInput
     ChatParticipant?: ChatParticipantCreateNestedManyWithoutUserInput
@@ -26158,6 +26204,7 @@ export namespace Prisma {
     role?: $Enums.Role
     imgPublicId?: string | null
     imgUrl?: string | null
+    token?: string | null
     Blog?: BlogUncheckedCreateNestedManyWithoutUserInput
     Chat?: ChatUncheckedCreateNestedManyWithoutUserInput
     ChatParticipant?: ChatParticipantUncheckedCreateNestedManyWithoutUserInput
@@ -26191,6 +26238,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     imgPublicId?: NullableStringFieldUpdateOperationsInput | string | null
     imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: NullableStringFieldUpdateOperationsInput | string | null
     Blog?: BlogUpdateManyWithoutUserNestedInput
     Chat?: ChatUpdateManyWithoutUserNestedInput
     ChatParticipant?: ChatParticipantUpdateManyWithoutUserNestedInput
@@ -26209,6 +26257,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     imgPublicId?: NullableStringFieldUpdateOperationsInput | string | null
     imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: NullableStringFieldUpdateOperationsInput | string | null
     Blog?: BlogUncheckedUpdateManyWithoutUserNestedInput
     Chat?: ChatUncheckedUpdateManyWithoutUserNestedInput
     ChatParticipant?: ChatParticipantUncheckedUpdateManyWithoutUserNestedInput
@@ -26226,6 +26275,7 @@ export namespace Prisma {
     role?: $Enums.Role
     imgPublicId?: string | null
     imgUrl?: string | null
+    token?: string | null
     Blog?: BlogCreateNestedManyWithoutUserInput
     Chat?: ChatCreateNestedManyWithoutUserInput
     ChatParticipant?: ChatParticipantCreateNestedManyWithoutUserInput
@@ -26244,6 +26294,7 @@ export namespace Prisma {
     role?: $Enums.Role
     imgPublicId?: string | null
     imgUrl?: string | null
+    token?: string | null
     Blog?: BlogUncheckedCreateNestedManyWithoutUserInput
     Chat?: ChatUncheckedCreateNestedManyWithoutUserInput
     ChatParticipant?: ChatParticipantUncheckedCreateNestedManyWithoutUserInput
@@ -26295,6 +26346,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     imgPublicId?: NullableStringFieldUpdateOperationsInput | string | null
     imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: NullableStringFieldUpdateOperationsInput | string | null
     Blog?: BlogUpdateManyWithoutUserNestedInput
     Chat?: ChatUpdateManyWithoutUserNestedInput
     ChatParticipant?: ChatParticipantUpdateManyWithoutUserNestedInput
@@ -26313,6 +26365,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     imgPublicId?: NullableStringFieldUpdateOperationsInput | string | null
     imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: NullableStringFieldUpdateOperationsInput | string | null
     Blog?: BlogUncheckedUpdateManyWithoutUserNestedInput
     Chat?: ChatUncheckedUpdateManyWithoutUserNestedInput
     ChatParticipant?: ChatParticipantUncheckedUpdateManyWithoutUserNestedInput
@@ -26382,6 +26435,7 @@ export namespace Prisma {
     role?: $Enums.Role
     imgPublicId?: string | null
     imgUrl?: string | null
+    token?: string | null
     Blog?: BlogCreateNestedManyWithoutUserInput
     Chat?: ChatCreateNestedManyWithoutUserInput
     ChatParticipant?: ChatParticipantCreateNestedManyWithoutUserInput
@@ -26400,6 +26454,7 @@ export namespace Prisma {
     role?: $Enums.Role
     imgPublicId?: string | null
     imgUrl?: string | null
+    token?: string | null
     Blog?: BlogUncheckedCreateNestedManyWithoutUserInput
     Chat?: ChatUncheckedCreateNestedManyWithoutUserInput
     ChatParticipant?: ChatParticipantUncheckedCreateNestedManyWithoutUserInput
@@ -26467,6 +26522,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     imgPublicId?: NullableStringFieldUpdateOperationsInput | string | null
     imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: NullableStringFieldUpdateOperationsInput | string | null
     Blog?: BlogUpdateManyWithoutUserNestedInput
     Chat?: ChatUpdateManyWithoutUserNestedInput
     ChatParticipant?: ChatParticipantUpdateManyWithoutUserNestedInput
@@ -26485,6 +26541,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     imgPublicId?: NullableStringFieldUpdateOperationsInput | string | null
     imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: NullableStringFieldUpdateOperationsInput | string | null
     Blog?: BlogUncheckedUpdateManyWithoutUserNestedInput
     Chat?: ChatUncheckedUpdateManyWithoutUserNestedInput
     ChatParticipant?: ChatParticipantUncheckedUpdateManyWithoutUserNestedInput
@@ -26528,6 +26585,7 @@ export namespace Prisma {
     role?: $Enums.Role
     imgPublicId?: string | null
     imgUrl?: string | null
+    token?: string | null
     Blog?: BlogCreateNestedManyWithoutUserInput
     Chat?: ChatCreateNestedManyWithoutUserInput
     ChatParticipant?: ChatParticipantCreateNestedManyWithoutUserInput
@@ -26546,6 +26604,7 @@ export namespace Prisma {
     role?: $Enums.Role
     imgPublicId?: string | null
     imgUrl?: string | null
+    token?: string | null
     Blog?: BlogUncheckedCreateNestedManyWithoutUserInput
     Chat?: ChatUncheckedCreateNestedManyWithoutUserInput
     ChatParticipant?: ChatParticipantUncheckedCreateNestedManyWithoutUserInput
@@ -26611,6 +26670,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     imgPublicId?: NullableStringFieldUpdateOperationsInput | string | null
     imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: NullableStringFieldUpdateOperationsInput | string | null
     Blog?: BlogUpdateManyWithoutUserNestedInput
     Chat?: ChatUpdateManyWithoutUserNestedInput
     ChatParticipant?: ChatParticipantUpdateManyWithoutUserNestedInput
@@ -26629,6 +26689,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     imgPublicId?: NullableStringFieldUpdateOperationsInput | string | null
     imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: NullableStringFieldUpdateOperationsInput | string | null
     Blog?: BlogUncheckedUpdateManyWithoutUserNestedInput
     Chat?: ChatUncheckedUpdateManyWithoutUserNestedInput
     ChatParticipant?: ChatParticipantUncheckedUpdateManyWithoutUserNestedInput
@@ -26646,6 +26707,7 @@ export namespace Prisma {
     role?: $Enums.Role
     imgPublicId?: string | null
     imgUrl?: string | null
+    token?: string | null
     Blog?: BlogCreateNestedManyWithoutUserInput
     Chat?: ChatCreateNestedManyWithoutUserInput
     ChatParticipant?: ChatParticipantCreateNestedManyWithoutUserInput
@@ -26664,6 +26726,7 @@ export namespace Prisma {
     role?: $Enums.Role
     imgPublicId?: string | null
     imgUrl?: string | null
+    token?: string | null
     Blog?: BlogUncheckedCreateNestedManyWithoutUserInput
     Chat?: ChatUncheckedCreateNestedManyWithoutUserInput
     ChatParticipant?: ChatParticipantUncheckedCreateNestedManyWithoutUserInput
@@ -26697,6 +26760,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     imgPublicId?: NullableStringFieldUpdateOperationsInput | string | null
     imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: NullableStringFieldUpdateOperationsInput | string | null
     Blog?: BlogUpdateManyWithoutUserNestedInput
     Chat?: ChatUpdateManyWithoutUserNestedInput
     ChatParticipant?: ChatParticipantUpdateManyWithoutUserNestedInput
@@ -26715,6 +26779,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     imgPublicId?: NullableStringFieldUpdateOperationsInput | string | null
     imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: NullableStringFieldUpdateOperationsInput | string | null
     Blog?: BlogUncheckedUpdateManyWithoutUserNestedInput
     Chat?: ChatUncheckedUpdateManyWithoutUserNestedInput
     ChatParticipant?: ChatParticipantUncheckedUpdateManyWithoutUserNestedInput
@@ -26732,6 +26797,7 @@ export namespace Prisma {
     role?: $Enums.Role
     imgPublicId?: string | null
     imgUrl?: string | null
+    token?: string | null
     Blog?: BlogCreateNestedManyWithoutUserInput
     Chat?: ChatCreateNestedManyWithoutUserInput
     ChatParticipant?: ChatParticipantCreateNestedManyWithoutUserInput
@@ -26750,6 +26816,7 @@ export namespace Prisma {
     role?: $Enums.Role
     imgPublicId?: string | null
     imgUrl?: string | null
+    token?: string | null
     Blog?: BlogUncheckedCreateNestedManyWithoutUserInput
     Chat?: ChatUncheckedCreateNestedManyWithoutUserInput
     ChatParticipant?: ChatParticipantUncheckedCreateNestedManyWithoutUserInput
@@ -26783,6 +26850,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     imgPublicId?: NullableStringFieldUpdateOperationsInput | string | null
     imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: NullableStringFieldUpdateOperationsInput | string | null
     Blog?: BlogUpdateManyWithoutUserNestedInput
     Chat?: ChatUpdateManyWithoutUserNestedInput
     ChatParticipant?: ChatParticipantUpdateManyWithoutUserNestedInput
@@ -26801,6 +26869,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     imgPublicId?: NullableStringFieldUpdateOperationsInput | string | null
     imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: NullableStringFieldUpdateOperationsInput | string | null
     Blog?: BlogUncheckedUpdateManyWithoutUserNestedInput
     Chat?: ChatUncheckedUpdateManyWithoutUserNestedInput
     ChatParticipant?: ChatParticipantUncheckedUpdateManyWithoutUserNestedInput
