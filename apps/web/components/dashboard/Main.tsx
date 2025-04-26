@@ -4,11 +4,11 @@ import { useEffect, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { DocumentProgress } from "@/components/dashboard/document-progress"
-import { RecentChats } from "@/components/dashboard/recent-chats"
-import { VideoLibrary } from "@/components/dashboard/video-library"
-import { BlogSection } from "@/components/dashboard/blog-section"
-import { mockDocuments } from "@/lib/mock-data"
+import { DocumentProgress } from "./document-progress"
+import { RecentChats } from "./recent-chats"
+import { VideoLibrary } from "./video-library"
+import { BlogSection } from "./blog-section"
+import { mockDocuments } from "../../lib/mock-data"
 
 export default function DashboardPage() {
   const router = useRouter()
