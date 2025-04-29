@@ -1,26 +1,17 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { useRouter } from "next/navigation"
-import { isAuthenticated } from "@/lib/auth"
-import { DocumentProgress } from "@/components/dashboard/document-progress"
-import { RecentChats } from "@/components/dashboard/recent-chats"
-import { VideoLibrary } from "@/components/dashboard/video-library"
-import { BlogSection } from "@/components/dashboard/blog-section"
-import { mockDocuments } from "@/lib/mock-data"
+import { DocumentProgress } from "../../components/dashboard/document-progress"
+import { RecentChats } from "../../components/dashboard/recent-chats"
+import { VideoLibrary } from "../../components/dashboard/video-library"
+import { BlogSection } from "../../components/dashboard/blog-section"
+import { mockDocuments } from "../../lib/mock-data"
 
 export default function DashboardPage() {
-  const router = useRouter()
   const [activeTab, setActiveTab] = useState<"overview" | "videos" | "documents" | "chat" | "blog">("overview")
 
-  // Check if user is authenticated
-  useEffect(() => {
-    if (!isAuthenticated()) {
-      router.push("/auth/login?redirect=/dashboard")
-    }
-  }, [router])
 
   // Calculate document completion percentage
   const completedDocs = mockDocuments.filter((doc) => doc.status === "verified").length
