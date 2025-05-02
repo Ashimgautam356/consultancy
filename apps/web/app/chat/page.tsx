@@ -3,10 +3,10 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { ChatSidebar } from "@/components/chat/chat-sidebar"
-import { ChatWindow } from "@/components/chat/chat-window"
+import { ChatSidebar } from "../../components/chat/chat-sidebar"
+import { ChatWindow } from "../../components/chat/chat-window"
 import { useRouter } from "next/navigation"
-import { DashboardNavbar } from "@/components/dashboard/dashboard-navbar"
+import { DashboardNavbar } from "../../components/dashboard/dashboard-navbar"
 
 export default function ChatPage() {
   const [selectedChat, setSelectedChat] = useState<number | null>(null)

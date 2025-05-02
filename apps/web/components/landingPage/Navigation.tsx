@@ -50,13 +50,13 @@ export const Navigation = () => {
 
       <div className="hidden md:flex space-x-3">
         <Link
-          href="/auth/login"
+          href="/signin"
           className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors"
         >
           Log In
         </Link>
         <Link
-          href="/auth/signup"
+          href="/signup"
           className="px-4 py-2 bg-indigo-600 rounded-md text-white hover:bg-indigo-700 transition-colors"
         >
           Sign Up
