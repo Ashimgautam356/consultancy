@@ -14,8 +14,7 @@ export interface session extends Session {
       name: string;
     };
   }
-  
-  console.log("this is my secret",process.env.JWT_SECRET)
+
 export const authOptions = {
   session:{
     strategy: "jwt",
@@ -33,23 +32,15 @@ export const authOptions = {
                         return null
                     }
 
-
-
-                    const user2 = await prisma.user.findFirst({
-                      where:{email: credentials.email},                  
-                    })
-                    console.log(user2)
                   
                     const user = await prisma.user.findUnique({
                         where: { email: credentials.email },
                       });
                     
-                      console.log(user)
                       if (!user) return null;
                     
                       // now see who is the user and fethch the password and then login
                       const role = user.role; 
-                      console.log(role)
 
                       if(role == "EMPLOYEE"){
                         
@@ -110,7 +101,6 @@ export const authOptions = {
                         const isValid = await bcrypt.compare(credentials.password, String(studentInfo?.passwordHash));
                         if (!isValid) return null;
                         
-                        console.log(process.env.JWT_SECRET)
                         const myjwt = jwt.sign({ id: user.id },`${process.env.JWT_SECRET}`,{expiresIn:'365d'});
           
                         await prisma.user.update({

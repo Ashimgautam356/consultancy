@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-import { useSession } from "next-auth/react"
 import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import axios from "axios"
@@ -11,7 +10,7 @@ interface ChatWindowProps {
   onBack: () => void
   isMobile: boolean
   selectedSocket: WebSocket | null
-  user: string
+  user: any
 }
 
 interface MyId{
@@ -19,25 +18,27 @@ interface MyId{
   fullName:string
 
 }
+
+
 export function ChatWindow({ chatId, onBack, isMobile, selectedSocket,user }: ChatWindowProps) {
-  console.log(user)
   const [messages, setMessages] = useState<any[]>([])
   const [toAppend, setToAppend] = useState<any[]>([])
 
   const [newMessage, setNewMessage] = useState("")
   const [chat, setChat] = useState<any>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
-  const session = useSession()
+
+
   useEffect(() => {
     if (chatId) {
-      axios.get(`http://localhost:3005/api/v1/chat/${chatId}`, { withCredentials: true, headers:{Authorization:`Bearer ${user}`} }).then(res => {
+      axios.get(`http://localhost:3005/api/v1/chat/${chatId}`, {  headers:{Authorization:`Bearer ${user.jwtToken}`} }).then(res => {
         if (res.status == 200) {
           setChat(res.data?.groupChats)
         }
       })
 
       // Get messages for this chat
-      axios.get(`http://localhost:3005/api/v1/message/${chatId}`, { withCredentials: true,headers:{Authorization:`Bearer ${user}`} }).then(res => {
+      axios.get(`http://localhost:3005/api/v1/message/${chatId}`, { headers:{Authorization:`Bearer ${user.jwtToken}`} }).then(res => {
         if (res.status == 200) {
           setMessages(res.data?.messages.map((msg:any)=>{
             return {senderId:msg.senderId,message:msg.message}
@@ -55,18 +56,6 @@ export function ChatWindow({ chatId, onBack, isMobile, selectedSocket,user }: Ch
     // Scroll to bottom when messages change
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages])
-
-
-  const myId = localStorage.getItem("userInfo") 
-    if (!myId) return
-  const parsedInfo:MyId = JSON.parse(myId)
-
-
-
-
-
- 
- 
 
 
   const handleSendMessage = (e: any) => {
@@ -201,7 +190,7 @@ export function ChatWindow({ chatId, onBack, isMobile, selectedSocket,user }: Ch
       <div className="relative flex-1 overflow-y-auto p-4">
         <div className="space-y-4 border border-">
           {messages.map((message,id) => {
-            const isCurrentUser = message.senderId === parsedInfo.userId
+            const isCurrentUser = message.senderId == user.id
 
             return (
               <div key={id} className={`flex ${isCurrentUser ? "justify-end" : "justify-start"}`}>

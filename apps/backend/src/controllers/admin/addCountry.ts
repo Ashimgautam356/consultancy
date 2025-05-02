@@ -39,7 +39,8 @@ export default async function addCountry(req:Request, res:Response){
             data:{
                 chatType:"GROUP",
                 adminId:req.body.userId, 
-                roomLink: req.body.country
+                roomLink: req.body.country,
+                chatName: req.body.country
             }
         })
 

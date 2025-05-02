@@ -6,7 +6,7 @@ import { prismaClient as client } from "@repo/db/client";
 export default async function oneChat (req:Request, res:Response){
 
 
-    const userId = req.body.userId; 
+    const userId = (req as any).userId; 
     const chatId:number = Number(req.params.specificChat) 
 
     try{

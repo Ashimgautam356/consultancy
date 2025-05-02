@@ -5,7 +5,7 @@ import { prismaClient as client } from "@repo/db/client";
 
 
 export default async function getUserData(req:Request, res:Response) {
-    const userId = req.body.userId; 
+    const userId = (req as any).userId; 
 
     try{
         const userInfo = await client.user.findUnique({where:{id:userId},select:{role:true,email:true,imgUrl:true,imgPublicId:true}})

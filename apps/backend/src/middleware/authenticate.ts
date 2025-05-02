@@ -22,7 +22,6 @@ export async function auth(req:Request,res:Response,next:NextFunction) {
 
     try {
       const decoded = jwt.verify(token, `${process.env.JWT_SECRET}`) as { id: string };
-      console.log(decoded)
 
       req.userId = decoded.id;
 

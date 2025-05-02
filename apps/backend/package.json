@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc -b",
-    "dev": "npm run build && node ./dist/index.js"
+    "dev": "npm run build && node ./dist/index.js",
+    "ws": "npm run build && node ./dist/web-socket/index.js"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.17",
-    "@types/express": "^5.0.1"
+    "@types/express": "^5.0.1",
+    "@types/ws": "^8.18.1"
   },
   "keywords": [],
   "author": "",
@@ -27,6 +29,7 @@
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "typescript": "^5.8.3",
+    "ws": "^8.18.1",
     "zod": "^3.24.3"
   }
 }

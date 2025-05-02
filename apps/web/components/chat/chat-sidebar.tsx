@@ -15,7 +15,6 @@ interface ChatSidebarProps {
 }
 
 export  function ChatSidebar({ onSelectChat, selectedChatId,onSelectSocket,user }: ChatSidebarProps) {
-  console.log(user)
 
   const [activeTab, setActiveTab] = useState<"countries" | "private">("countries")
   const [searchTerm, setSearchTerm] = useState("")
@@ -51,9 +50,8 @@ export  function ChatSidebar({ onSelectChat, selectedChatId,onSelectSocket,user 
 
   useEffect(()=>{
     if (!selectedChatId) return;
-    const token = localStorage.getItem("token")
 
-        const ws = new WebSocket(`ws://localhost:8080?token=${token}`)
+        const ws = new WebSocket(`ws://localhost:8080?token=${user}`)
         
         ws.onopen=()=>{
           onSelectSocket(ws)
@@ -68,7 +66,6 @@ export  function ChatSidebar({ onSelectChat, selectedChatId,onSelectSocket,user 
           ws.close()
         }
   },[selectedChatId])
-
   return (
     <div className="w-full md:w-80 bg-white border-r border-gray-200 flex flex-col h-full">
       <div className="p-4 border-b border-gray-200">

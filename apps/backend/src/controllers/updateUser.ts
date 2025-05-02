@@ -3,7 +3,7 @@ import { prismaClient as client } from "@repo/db/client";
 
 
 export default async function updateUser(req:Request, res:Response) {
-    const userId = req.body.userId; 
+    const userId = (req as any).userId; 
     try{
         const userInfo = await client.user.findUnique({where:{id:userId}})
         await client.user.update({where:{id:userInfo?.id},data:{imgUrl:req.body.imgUrl, imgPublicId:req.body.imgPublicId}})

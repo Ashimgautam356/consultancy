@@ -41,10 +41,10 @@ export default function ChatPage() {
       <div className="flex flex-1 overflow-hidden">
         {/* Show sidebar on desktop or when no chat is selected on mobile */}
         {(!isMobile || !selectedChat) && <ChatSidebar onSelectChat={setSelectedChat} selectedChatId={selectedChat} onSelectSocket={setSocket} user={session?.data.user.jwtToken}/>}
-
+    
         {/* Show chat window when a chat is selected */}
         {(selectedChat || isMobile) && (
-          <ChatWindow chatId={selectedChat} onBack={() => setSelectedChat(null)} isMobile={isMobile} selectedSocket={socket} user={session?.data.user.jwtToken}/>
+          <ChatWindow chatId={selectedChat} onBack={() => setSelectedChat(null)} isMobile={isMobile} selectedSocket={socket} user={session?.data.user}/>
         )}
       </div>
     </div>
