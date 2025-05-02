@@ -14,12 +14,13 @@ export interface session extends Session {
       name: string;
     };
   }
-
+  
+  console.log("this is my secret",process.env.JWT_SECRET)
 export const authOptions = {
   session:{
     strategy: "jwt",
   },
-    providers:[
+  providers:[
         CredentialsProvider({
             name: 'Credentials',
             credentials: {
@@ -59,8 +60,7 @@ export const authOptions = {
                          
                         const isValid = await bcrypt.compare(credentials.password, String(studentInfo?.passwordHash));
                         if (!isValid) return null;
-                      
-                        const myjwt = jwt.sign({ id: user.id },process.env.JWT_SECRET!,{expiresIn:'365d'});
+                        const myjwt = jwt.sign({ id: user.id },`${process.env.JWT_SECRET}`,{expiresIn:'365d'});
           
                         await prisma.user.update({
                           where: { id: user.id },
@@ -87,7 +87,7 @@ export const authOptions = {
                         const isValid = await bcrypt.compare(credentials.password, String(adminInfo?.passwordHash));
                         if (!isValid) return null;
                       
-                        const myjwt = jwt.sign({ id: user.id },process.env.JWT_SECRET!,{expiresIn:'365d'});
+                        const myjwt = jwt.sign({ id: user.id },`${process.env.JWT_SECRET}`,{expiresIn:'365d'});
           
                         await prisma.user.update({
                           where: { id: user.id },
@@ -108,10 +108,10 @@ export const authOptions = {
                         })
                          
                         const isValid = await bcrypt.compare(credentials.password, String(studentInfo?.passwordHash));
-                        console.log(isValid)
                         if (!isValid) return null;
-                      
-                        const myjwt = jwt.sign({ id: user.id },process.env.JWT_SECRET!,{expiresIn:'365d'});
+                        
+                        console.log(process.env.JWT_SECRET)
+                        const myjwt = jwt.sign({ id: user.id },`${process.env.JWT_SECRET}`,{expiresIn:'365d'});
           
                         await prisma.user.update({
                           where: { id: user.id },
@@ -145,6 +145,7 @@ export const authOptions = {
         async jwt({ token, user }:any) {
           if (user) {
             token.id = user.id;
+            token.name = user.name; 
             token.jwtToken = (user as any).jwtToken;
             token.role = (user as any).role;
             token.email = user.email
@@ -154,9 +155,10 @@ export const authOptions = {
         async session({ session, token }:any) {
             const newsession: session = session as session
 
-          newsession.user.id = token.uid as string;
+          newsession.user.id = token.id as string;
           newsession.user.jwtToken = token.jwtToken as string;
           newsession.user.role = token.role as string;
+          newsession.user.name = token.name as string
           return newsession;
 
 

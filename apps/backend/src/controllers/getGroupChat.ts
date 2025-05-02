@@ -5,8 +5,7 @@ import { prismaClient as client } from "@repo/db/client";
 
 export default async function getGroupChat (req:Request, res:Response){
 
-
-    const userId = req.body.userId; 
+    const userId = (req as any).userId
 
     try{
         const groupChats = await client.chat.findMany({where:{

@@ -2,54 +2,40 @@ import {Response,Request,NextFunction} from 'express'
 import 'dotenv/config'
 import jwt from 'jsonwebtoken'
 
+declare global {
+  namespace Express {
+    interface Request {
+      userId?: string;
+    }
+  }
+}
 
 export async function auth(req:Request,res:Response,next:NextFunction) {
-    
-    // const token = req.cookies.authToken as String | any; 
-    const authHeader = req.headers.authorization;
+  const authHeader = req.headers.authorization;
+  if (authHeader?.startsWith('Bearer ')) {
+    const token = authHeader.split(' ')[1];
 
-    if (authHeader?.startsWith('Bearer ')) {
-        const token = authHeader.split(' ')[1];
-        if(!token){
-            res.status(401).json({
-                message:"unauthorized"
-            })
-            return; 
-        }
-        try {
-          const decoded:{userId:string,iat:number}|any = jwt.verify(token, `${process.env.NEXTAUTH_SECRET}`);
+    if (!token) {
+      res.status(401).json({ message: 'Unauthorized: Token missing' });
+      return
+    }
 
-          req.body.userId = decoded.userId;
+    try {
+      const decoded = jwt.verify(token, `${process.env.JWT_SECRET}`) as { id: string };
+      console.log(decoded)
 
-          next();
-        } catch (err) {
-          
-            res.status(403).json({ message: 'Invalid or expired token' });
-            return
-        }
-      } else {
-        res.status(401).json({ message: 'No token provided' });
-        return
-      }
+      req.userId = decoded.id;
 
-    // try{
-    //     const isValid:{userId:string,iat:number}|any = jwt.verify(token,`${process.env.JWT_SECRET}`)
-     
-    //     if(!isValid){
-    //         res.status(403).json({
-    //         message:"token not valid"
-    //         })
-    //         return;
-    //     }
+      next();
 
-
-    //     req.body.userId = isValid.userId; 
-    //     next()
-    // }catch(err){
-    //     res.status(500).json({
-    //         message:"internal server error"
-    //     })
-    // }
-
+    } catch (err) {
+      console.error('JWT error:', err);
+      res.status(403).json({ message: 'Forbidden: Invalid or expired token' });
+      return
+    }
+  } else {
+    res.status(401).json({ message: 'Unauthorized: No token provided' });
+    return 
+  }
     
 }

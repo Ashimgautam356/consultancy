@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-
+import { useSession } from "next-auth/react"
 import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import axios from "axios"
@@ -11,6 +11,7 @@ interface ChatWindowProps {
   onBack: () => void
   isMobile: boolean
   selectedSocket: WebSocket | null
+  user: string
 }
 
 interface MyId{
@@ -18,24 +19,25 @@ interface MyId{
   fullName:string
 
 }
-export function ChatWindow({ chatId, onBack, isMobile, selectedSocket }: ChatWindowProps) {
+export function ChatWindow({ chatId, onBack, isMobile, selectedSocket,user }: ChatWindowProps) {
+  console.log(user)
   const [messages, setMessages] = useState<any[]>([])
   const [toAppend, setToAppend] = useState<any[]>([])
 
   const [newMessage, setNewMessage] = useState("")
   const [chat, setChat] = useState<any>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
-
+  const session = useSession()
   useEffect(() => {
     if (chatId) {
-      axios.get(`http://localhost:3005/api/v1/chat/${chatId}`, { withCredentials: true }).then(res => {
+      axios.get(`http://localhost:3005/api/v1/chat/${chatId}`, { withCredentials: true, headers:{Authorization:`Bearer ${user}`} }).then(res => {
         if (res.status == 200) {
           setChat(res.data?.groupChats)
         }
       })
 
       // Get messages for this chat
-      axios.get(`http://localhost:3005/api/v1/message/${chatId}`, { withCredentials: true }).then(res => {
+      axios.get(`http://localhost:3005/api/v1/message/${chatId}`, { withCredentials: true,headers:{Authorization:`Bearer ${user}`} }).then(res => {
         if (res.status == 200) {
           setMessages(res.data?.messages.map((msg:any)=>{
             return {senderId:msg.senderId,message:msg.message}

@@ -4,14 +4,19 @@ import { useEffect, useState } from "react"
 import Image from "next/image"
 import { mockChats } from "../../lib/mock-data"
 import axios from "axios"
+import { useSession } from "next-auth/react"
+
 
 interface ChatSidebarProps {
   onSelectChat: (chatId: number) => void
   selectedChatId: number | null
   onSelectSocket: (ws:WebSocket)=>void
+  user: string
 }
 
-export function ChatSidebar({ onSelectChat, selectedChatId,onSelectSocket }: ChatSidebarProps) {
+export  function ChatSidebar({ onSelectChat, selectedChatId,onSelectSocket,user }: ChatSidebarProps) {
+  console.log(user)
+
   const [activeTab, setActiveTab] = useState<"countries" | "private">("countries")
   const [searchTerm, setSearchTerm] = useState("")
 
@@ -28,7 +33,7 @@ export function ChatSidebar({ onSelectChat, selectedChatId,onSelectSocket }: Cha
   const [groupChat, setGroupChat] = useState([])
 
   useEffect(()=>{
-       axios.get("http://localhost:3005/api/v1/chat",{withCredentials:true}).then(res=>{
+       axios.get("http://localhost:3005/api/v1/chat",{headers:{Authorization:`Bearer ${user}`}}).then(res=>{
         if(res.status==200){
           setGroupChat(res?.data?.groupChats)
         }
@@ -63,7 +68,6 @@ export function ChatSidebar({ onSelectChat, selectedChatId,onSelectSocket }: Cha
           ws.close()
         }
   },[selectedChatId])
-
 
   return (
     <div className="w-full md:w-80 bg-white border-r border-gray-200 flex flex-col h-full">

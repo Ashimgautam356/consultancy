@@ -1,26 +1,17 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import Image from "next/image"
-import Link from "next/link"
-import { ChatSidebar } from "@/components/chat/chat-sidebar"
-import { ChatWindow } from "@/components/chat/chat-window"
-import { useRouter } from "next/navigation"
+import { ChatSidebar } from "../../../components/chat/chat-sidebar"
+import { ChatWindow } from "../../../components/chat/chat-window"
+import Nav from "../../../components/dashboard/client-component/Nav"
 
-export default function ChatPage() {
+
+ export default function ChatPage() {
   const [selectedChat, setSelectedChat] = useState<number | null>(null)
   const [isMobile, setIsMobile] = useState(false)
   const [socket, setSocket] = useState<WebSocket | null>(null)
 
-  const router = useRouter()
-
-  // Check if user is authenticated (simplified - in a real app, use a proper auth check)
-  useEffect(() => {
-    const token = localStorage.getItem("jwt_token")
-    if (!token) {
-      router.push("/auth/login?redirect=/chat")
-    }
-  }, [router])
+  
 
   // Handle responsive layout
   useEffect(() => {
@@ -38,6 +29,7 @@ export default function ChatPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
+      <Nav></Nav>
       <div className="flex flex-1 overflow-hidden">
         {/* Show sidebar on desktop or when no chat is selected on mobile */}
         {(!isMobile || !selectedChat) && <ChatSidebar  onSelectChat={setSelectedChat} selectedChatId={selectedChat} onSelectSocket={setSocket} />}

@@ -16,7 +16,7 @@ const Nav = () => {
 
     if(session.status === 'loading'){
       return (
-        <h1>loading!!!!11</h1>
+        <h1>loading!!!!</h1>
       )
     }
     if(!session.data?.user){

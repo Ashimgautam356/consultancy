@@ -2,10 +2,16 @@
 
 import { SessionProvider } from "next-auth/react"
 import Nav from "./client-component/Nav"
-export  function DashboardNavbar() {
+
+type Props = {
+  children: React.ReactNode;
+};
+
+export  function DashboardNavbar({ children }: Props) {
   return (
     <SessionProvider>
       <Nav />
+      {children}
     </SessionProvider>
   )
 }
