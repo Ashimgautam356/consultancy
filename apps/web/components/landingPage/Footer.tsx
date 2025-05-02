@@ -3,7 +3,6 @@ import {prismaClient as prisma} from '@repo/db/client'
 const Footer = async () => {
 
     const destinations =  await prisma.countries.findMany()
-    console.log(destinations)
 
   return (
     <footer id="contact" className="bg-gray-900 text-white pt-16 pb-8">
