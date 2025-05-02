@@ -13894,7 +13894,7 @@ export namespace Prisma {
     isRead?: boolean
     createdAt?: boolean
     Chat?: boolean | ChatDefaultArgs<ExtArgs>
-    User?: boolean | UserDefaultArgs<ExtArgs>
+    sender?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["message"]>
 
   export type MessageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -13905,7 +13905,7 @@ export namespace Prisma {
     isRead?: boolean
     createdAt?: boolean
     Chat?: boolean | ChatDefaultArgs<ExtArgs>
-    User?: boolean | UserDefaultArgs<ExtArgs>
+    sender?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["message"]>
 
   export type MessageSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -13916,7 +13916,7 @@ export namespace Prisma {
     isRead?: boolean
     createdAt?: boolean
     Chat?: boolean | ChatDefaultArgs<ExtArgs>
-    User?: boolean | UserDefaultArgs<ExtArgs>
+    sender?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["message"]>
 
   export type MessageSelectScalar = {
@@ -13931,22 +13931,22 @@ export namespace Prisma {
   export type MessageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "chatId" | "senderId" | "message" | "isRead" | "createdAt", ExtArgs["result"]["message"]>
   export type MessageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Chat?: boolean | ChatDefaultArgs<ExtArgs>
-    User?: boolean | UserDefaultArgs<ExtArgs>
+    sender?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type MessageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Chat?: boolean | ChatDefaultArgs<ExtArgs>
-    User?: boolean | UserDefaultArgs<ExtArgs>
+    sender?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type MessageIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Chat?: boolean | ChatDefaultArgs<ExtArgs>
-    User?: boolean | UserDefaultArgs<ExtArgs>
+    sender?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $MessagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Message"
     objects: {
       Chat: Prisma.$ChatPayload<ExtArgs>
-      User: Prisma.$UserPayload<ExtArgs>
+      sender: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -14350,7 +14350,7 @@ export namespace Prisma {
   export interface Prisma__MessageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     Chat<T extends ChatDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ChatDefaultArgs<ExtArgs>>): Prisma__ChatClient<$Result.GetResult<Prisma.$ChatPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    User<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    sender<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -21729,7 +21729,7 @@ export namespace Prisma {
     isRead?: BoolFilter<"Message"> | boolean
     createdAt?: DateTimeFilter<"Message"> | Date | string
     Chat?: XOR<ChatScalarRelationFilter, ChatWhereInput>
-    User?: XOR<UserScalarRelationFilter, UserWhereInput>
+    sender?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type MessageOrderByWithRelationInput = {
@@ -21740,7 +21740,7 @@ export namespace Prisma {
     isRead?: SortOrder
     createdAt?: SortOrder
     Chat?: ChatOrderByWithRelationInput
-    User?: UserOrderByWithRelationInput
+    sender?: UserOrderByWithRelationInput
   }
 
   export type MessageWhereUniqueInput = Prisma.AtLeast<{
@@ -21754,7 +21754,7 @@ export namespace Prisma {
     isRead?: BoolFilter<"Message"> | boolean
     createdAt?: DateTimeFilter<"Message"> | Date | string
     Chat?: XOR<ChatScalarRelationFilter, ChatWhereInput>
-    User?: XOR<UserScalarRelationFilter, UserWhereInput>
+    sender?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
   export type MessageOrderByWithAggregationInput = {
@@ -22790,7 +22790,7 @@ export namespace Prisma {
     isRead?: boolean
     createdAt?: Date | string
     Chat: ChatCreateNestedOneWithoutMessageInput
-    User: UserCreateNestedOneWithoutMessageInput
+    sender: UserCreateNestedOneWithoutMessageInput
   }
 
   export type MessageUncheckedCreateInput = {
@@ -22807,7 +22807,7 @@ export namespace Prisma {
     isRead?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Chat?: ChatUpdateOneRequiredWithoutMessageNestedInput
-    User?: UserUpdateOneRequiredWithoutMessageNestedInput
+    sender?: UserUpdateOneRequiredWithoutMessageNestedInput
   }
 
   export type MessageUncheckedUpdateInput = {
@@ -23157,7 +23157,7 @@ export namespace Prisma {
     Document?: DocumentCreateNestedManyWithoutUserInput
     LiveSession?: LiveSessionCreateNestedManyWithoutUserInput
     LiveSessionParticipant?: LiveSessionParticipantCreateNestedManyWithoutUserInput
-    Message?: MessageCreateNestedManyWithoutUserInput
+    Message?: MessageCreateNestedManyWithoutSenderInput
     Payment?: PaymentCreateNestedManyWithoutUserInput
     Testimonial?: TestimonialCreateNestedManyWithoutUserInput
   }
@@ -23177,7 +23177,7 @@ export namespace Prisma {
     Document?: DocumentUncheckedCreateNestedManyWithoutUserInput
     LiveSession?: LiveSessionUncheckedCreateNestedManyWithoutUserInput
     LiveSessionParticipant?: LiveSessionParticipantUncheckedCreateNestedManyWithoutUserInput
-    Message?: MessageUncheckedCreateNestedManyWithoutUserInput
+    Message?: MessageUncheckedCreateNestedManyWithoutSenderInput
     Payment?: PaymentUncheckedCreateNestedManyWithoutUserInput
     Testimonial?: TestimonialUncheckedCreateNestedManyWithoutUserInput
   }
@@ -23196,7 +23196,7 @@ export namespace Prisma {
     Document?: DocumentUpdateManyWithoutUserNestedInput
     LiveSession?: LiveSessionUpdateManyWithoutUserNestedInput
     LiveSessionParticipant?: LiveSessionParticipantUpdateManyWithoutUserNestedInput
-    Message?: MessageUpdateManyWithoutUserNestedInput
+    Message?: MessageUpdateManyWithoutSenderNestedInput
     Payment?: PaymentUpdateManyWithoutUserNestedInput
     Testimonial?: TestimonialUpdateManyWithoutUserNestedInput
   }
@@ -23216,7 +23216,7 @@ export namespace Prisma {
     Document?: DocumentUncheckedUpdateManyWithoutUserNestedInput
     LiveSession?: LiveSessionUncheckedUpdateManyWithoutUserNestedInput
     LiveSessionParticipant?: LiveSessionParticipantUncheckedUpdateManyWithoutUserNestedInput
-    Message?: MessageUncheckedUpdateManyWithoutUserNestedInput
+    Message?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     Payment?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     Testimonial?: TestimonialUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -24838,10 +24838,10 @@ export namespace Prisma {
     connect?: LiveSessionParticipantWhereUniqueInput | LiveSessionParticipantWhereUniqueInput[]
   }
 
-  export type MessageCreateNestedManyWithoutUserInput = {
-    create?: XOR<MessageCreateWithoutUserInput, MessageUncheckedCreateWithoutUserInput> | MessageCreateWithoutUserInput[] | MessageUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: MessageCreateOrConnectWithoutUserInput | MessageCreateOrConnectWithoutUserInput[]
-    createMany?: MessageCreateManyUserInputEnvelope
+  export type MessageCreateNestedManyWithoutSenderInput = {
+    create?: XOR<MessageCreateWithoutSenderInput, MessageUncheckedCreateWithoutSenderInput> | MessageCreateWithoutSenderInput[] | MessageUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: MessageCreateOrConnectWithoutSenderInput | MessageCreateOrConnectWithoutSenderInput[]
+    createMany?: MessageCreateManySenderInputEnvelope
     connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
   }
 
@@ -24908,10 +24908,10 @@ export namespace Prisma {
     connect?: LiveSessionParticipantWhereUniqueInput | LiveSessionParticipantWhereUniqueInput[]
   }
 
-  export type MessageUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<MessageCreateWithoutUserInput, MessageUncheckedCreateWithoutUserInput> | MessageCreateWithoutUserInput[] | MessageUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: MessageCreateOrConnectWithoutUserInput | MessageCreateOrConnectWithoutUserInput[]
-    createMany?: MessageCreateManyUserInputEnvelope
+  export type MessageUncheckedCreateNestedManyWithoutSenderInput = {
+    create?: XOR<MessageCreateWithoutSenderInput, MessageUncheckedCreateWithoutSenderInput> | MessageCreateWithoutSenderInput[] | MessageUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: MessageCreateOrConnectWithoutSenderInput | MessageCreateOrConnectWithoutSenderInput[]
+    createMany?: MessageCreateManySenderInputEnvelope
     connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
   }
 
@@ -25027,17 +25027,17 @@ export namespace Prisma {
     deleteMany?: LiveSessionParticipantScalarWhereInput | LiveSessionParticipantScalarWhereInput[]
   }
 
-  export type MessageUpdateManyWithoutUserNestedInput = {
-    create?: XOR<MessageCreateWithoutUserInput, MessageUncheckedCreateWithoutUserInput> | MessageCreateWithoutUserInput[] | MessageUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: MessageCreateOrConnectWithoutUserInput | MessageCreateOrConnectWithoutUserInput[]
-    upsert?: MessageUpsertWithWhereUniqueWithoutUserInput | MessageUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: MessageCreateManyUserInputEnvelope
+  export type MessageUpdateManyWithoutSenderNestedInput = {
+    create?: XOR<MessageCreateWithoutSenderInput, MessageUncheckedCreateWithoutSenderInput> | MessageCreateWithoutSenderInput[] | MessageUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: MessageCreateOrConnectWithoutSenderInput | MessageCreateOrConnectWithoutSenderInput[]
+    upsert?: MessageUpsertWithWhereUniqueWithoutSenderInput | MessageUpsertWithWhereUniqueWithoutSenderInput[]
+    createMany?: MessageCreateManySenderInputEnvelope
     set?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
     disconnect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
     delete?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
     connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    update?: MessageUpdateWithWhereUniqueWithoutUserInput | MessageUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: MessageUpdateManyWithWhereWithoutUserInput | MessageUpdateManyWithWhereWithoutUserInput[]
+    update?: MessageUpdateWithWhereUniqueWithoutSenderInput | MessageUpdateWithWhereUniqueWithoutSenderInput[]
+    updateMany?: MessageUpdateManyWithWhereWithoutSenderInput | MessageUpdateManyWithWhereWithoutSenderInput[]
     deleteMany?: MessageScalarWhereInput | MessageScalarWhereInput[]
   }
 
@@ -25167,17 +25167,17 @@ export namespace Prisma {
     deleteMany?: LiveSessionParticipantScalarWhereInput | LiveSessionParticipantScalarWhereInput[]
   }
 
-  export type MessageUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<MessageCreateWithoutUserInput, MessageUncheckedCreateWithoutUserInput> | MessageCreateWithoutUserInput[] | MessageUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: MessageCreateOrConnectWithoutUserInput | MessageCreateOrConnectWithoutUserInput[]
-    upsert?: MessageUpsertWithWhereUniqueWithoutUserInput | MessageUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: MessageCreateManyUserInputEnvelope
+  export type MessageUncheckedUpdateManyWithoutSenderNestedInput = {
+    create?: XOR<MessageCreateWithoutSenderInput, MessageUncheckedCreateWithoutSenderInput> | MessageCreateWithoutSenderInput[] | MessageUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: MessageCreateOrConnectWithoutSenderInput | MessageCreateOrConnectWithoutSenderInput[]
+    upsert?: MessageUpsertWithWhereUniqueWithoutSenderInput | MessageUpsertWithWhereUniqueWithoutSenderInput[]
+    createMany?: MessageCreateManySenderInputEnvelope
     set?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
     disconnect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
     delete?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
     connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    update?: MessageUpdateWithWhereUniqueWithoutUserInput | MessageUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: MessageUpdateManyWithWhereWithoutUserInput | MessageUpdateManyWithWhereWithoutUserInput[]
+    update?: MessageUpdateWithWhereUniqueWithoutSenderInput | MessageUpdateWithWhereUniqueWithoutSenderInput[]
+    updateMany?: MessageUpdateManyWithWhereWithoutSenderInput | MessageUpdateManyWithWhereWithoutSenderInput[]
     deleteMany?: MessageScalarWhereInput | MessageScalarWhereInput[]
   }
 
@@ -25525,7 +25525,7 @@ export namespace Prisma {
     Document?: DocumentCreateNestedManyWithoutUserInput
     LiveSession?: LiveSessionCreateNestedManyWithoutUserInput
     LiveSessionParticipant?: LiveSessionParticipantCreateNestedManyWithoutUserInput
-    Message?: MessageCreateNestedManyWithoutUserInput
+    Message?: MessageCreateNestedManyWithoutSenderInput
     Payment?: PaymentCreateNestedManyWithoutUserInput
     Testimonial?: TestimonialCreateNestedManyWithoutUserInput
   }
@@ -25544,7 +25544,7 @@ export namespace Prisma {
     Document?: DocumentUncheckedCreateNestedManyWithoutUserInput
     LiveSession?: LiveSessionUncheckedCreateNestedManyWithoutUserInput
     LiveSessionParticipant?: LiveSessionParticipantUncheckedCreateNestedManyWithoutUserInput
-    Message?: MessageUncheckedCreateNestedManyWithoutUserInput
+    Message?: MessageUncheckedCreateNestedManyWithoutSenderInput
     Payment?: PaymentUncheckedCreateNestedManyWithoutUserInput
     Testimonial?: TestimonialUncheckedCreateNestedManyWithoutUserInput
   }
@@ -25601,7 +25601,7 @@ export namespace Prisma {
     Document?: DocumentUpdateManyWithoutUserNestedInput
     LiveSession?: LiveSessionUpdateManyWithoutUserNestedInput
     LiveSessionParticipant?: LiveSessionParticipantUpdateManyWithoutUserNestedInput
-    Message?: MessageUpdateManyWithoutUserNestedInput
+    Message?: MessageUpdateManyWithoutSenderNestedInput
     Payment?: PaymentUpdateManyWithoutUserNestedInput
     Testimonial?: TestimonialUpdateManyWithoutUserNestedInput
   }
@@ -25620,7 +25620,7 @@ export namespace Prisma {
     Document?: DocumentUncheckedUpdateManyWithoutUserNestedInput
     LiveSession?: LiveSessionUncheckedUpdateManyWithoutUserNestedInput
     LiveSessionParticipant?: LiveSessionParticipantUncheckedUpdateManyWithoutUserNestedInput
-    Message?: MessageUncheckedUpdateManyWithoutUserNestedInput
+    Message?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     Payment?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     Testimonial?: TestimonialUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -25665,7 +25665,7 @@ export namespace Prisma {
     Document?: DocumentCreateNestedManyWithoutUserInput
     LiveSession?: LiveSessionCreateNestedManyWithoutUserInput
     LiveSessionParticipant?: LiveSessionParticipantCreateNestedManyWithoutUserInput
-    Message?: MessageCreateNestedManyWithoutUserInput
+    Message?: MessageCreateNestedManyWithoutSenderInput
     Payment?: PaymentCreateNestedManyWithoutUserInput
     Testimonial?: TestimonialCreateNestedManyWithoutUserInput
   }
@@ -25684,7 +25684,7 @@ export namespace Prisma {
     Document?: DocumentUncheckedCreateNestedManyWithoutUserInput
     LiveSession?: LiveSessionUncheckedCreateNestedManyWithoutUserInput
     LiveSessionParticipant?: LiveSessionParticipantUncheckedCreateNestedManyWithoutUserInput
-    Message?: MessageUncheckedCreateNestedManyWithoutUserInput
+    Message?: MessageUncheckedCreateNestedManyWithoutSenderInput
     Payment?: PaymentUncheckedCreateNestedManyWithoutUserInput
     Testimonial?: TestimonialUncheckedCreateNestedManyWithoutUserInput
   }
@@ -25716,7 +25716,7 @@ export namespace Prisma {
     message: string
     isRead?: boolean
     createdAt?: Date | string
-    User: UserCreateNestedOneWithoutMessageInput
+    sender: UserCreateNestedOneWithoutMessageInput
   }
 
   export type MessageUncheckedCreateWithoutChatInput = {
@@ -25761,7 +25761,7 @@ export namespace Prisma {
     Document?: DocumentUpdateManyWithoutUserNestedInput
     LiveSession?: LiveSessionUpdateManyWithoutUserNestedInput
     LiveSessionParticipant?: LiveSessionParticipantUpdateManyWithoutUserNestedInput
-    Message?: MessageUpdateManyWithoutUserNestedInput
+    Message?: MessageUpdateManyWithoutSenderNestedInput
     Payment?: PaymentUpdateManyWithoutUserNestedInput
     Testimonial?: TestimonialUpdateManyWithoutUserNestedInput
   }
@@ -25780,7 +25780,7 @@ export namespace Prisma {
     Document?: DocumentUncheckedUpdateManyWithoutUserNestedInput
     LiveSession?: LiveSessionUncheckedUpdateManyWithoutUserNestedInput
     LiveSessionParticipant?: LiveSessionParticipantUncheckedUpdateManyWithoutUserNestedInput
-    Message?: MessageUncheckedUpdateManyWithoutUserNestedInput
+    Message?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     Payment?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     Testimonial?: TestimonialUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -25876,7 +25876,7 @@ export namespace Prisma {
     Document?: DocumentCreateNestedManyWithoutUserInput
     LiveSession?: LiveSessionCreateNestedManyWithoutUserInput
     LiveSessionParticipant?: LiveSessionParticipantCreateNestedManyWithoutUserInput
-    Message?: MessageCreateNestedManyWithoutUserInput
+    Message?: MessageCreateNestedManyWithoutSenderInput
     Payment?: PaymentCreateNestedManyWithoutUserInput
     Testimonial?: TestimonialCreateNestedManyWithoutUserInput
   }
@@ -25895,7 +25895,7 @@ export namespace Prisma {
     Document?: DocumentUncheckedCreateNestedManyWithoutUserInput
     LiveSession?: LiveSessionUncheckedCreateNestedManyWithoutUserInput
     LiveSessionParticipant?: LiveSessionParticipantUncheckedCreateNestedManyWithoutUserInput
-    Message?: MessageUncheckedCreateNestedManyWithoutUserInput
+    Message?: MessageUncheckedCreateNestedManyWithoutSenderInput
     Payment?: PaymentUncheckedCreateNestedManyWithoutUserInput
     Testimonial?: TestimonialUncheckedCreateNestedManyWithoutUserInput
   }
@@ -25961,7 +25961,7 @@ export namespace Prisma {
     Document?: DocumentUpdateManyWithoutUserNestedInput
     LiveSession?: LiveSessionUpdateManyWithoutUserNestedInput
     LiveSessionParticipant?: LiveSessionParticipantUpdateManyWithoutUserNestedInput
-    Message?: MessageUpdateManyWithoutUserNestedInput
+    Message?: MessageUpdateManyWithoutSenderNestedInput
     Payment?: PaymentUpdateManyWithoutUserNestedInput
     Testimonial?: TestimonialUpdateManyWithoutUserNestedInput
   }
@@ -25980,7 +25980,7 @@ export namespace Prisma {
     Document?: DocumentUncheckedUpdateManyWithoutUserNestedInput
     LiveSession?: LiveSessionUncheckedUpdateManyWithoutUserNestedInput
     LiveSessionParticipant?: LiveSessionParticipantUncheckedUpdateManyWithoutUserNestedInput
-    Message?: MessageUncheckedUpdateManyWithoutUserNestedInput
+    Message?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     Payment?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     Testimonial?: TestimonialUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -26024,7 +26024,7 @@ export namespace Prisma {
     Document?: DocumentCreateNestedManyWithoutUserInput
     LiveSession?: LiveSessionCreateNestedManyWithoutUserInput
     LiveSessionParticipant?: LiveSessionParticipantCreateNestedManyWithoutUserInput
-    Message?: MessageCreateNestedManyWithoutUserInput
+    Message?: MessageCreateNestedManyWithoutSenderInput
     Payment?: PaymentCreateNestedManyWithoutUserInput
     Testimonial?: TestimonialCreateNestedManyWithoutUserInput
   }
@@ -26043,7 +26043,7 @@ export namespace Prisma {
     Document?: DocumentUncheckedCreateNestedManyWithoutUserInput
     LiveSession?: LiveSessionUncheckedCreateNestedManyWithoutUserInput
     LiveSessionParticipant?: LiveSessionParticipantUncheckedCreateNestedManyWithoutUserInput
-    Message?: MessageUncheckedCreateNestedManyWithoutUserInput
+    Message?: MessageUncheckedCreateNestedManyWithoutSenderInput
     Payment?: PaymentUncheckedCreateNestedManyWithoutUserInput
     Testimonial?: TestimonialUncheckedCreateNestedManyWithoutUserInput
   }
@@ -26109,7 +26109,7 @@ export namespace Prisma {
     Document?: DocumentUpdateManyWithoutUserNestedInput
     LiveSession?: LiveSessionUpdateManyWithoutUserNestedInput
     LiveSessionParticipant?: LiveSessionParticipantUpdateManyWithoutUserNestedInput
-    Message?: MessageUpdateManyWithoutUserNestedInput
+    Message?: MessageUpdateManyWithoutSenderNestedInput
     Payment?: PaymentUpdateManyWithoutUserNestedInput
     Testimonial?: TestimonialUpdateManyWithoutUserNestedInput
   }
@@ -26128,7 +26128,7 @@ export namespace Prisma {
     Document?: DocumentUncheckedUpdateManyWithoutUserNestedInput
     LiveSession?: LiveSessionUncheckedUpdateManyWithoutUserNestedInput
     LiveSessionParticipant?: LiveSessionParticipantUncheckedUpdateManyWithoutUserNestedInput
-    Message?: MessageUncheckedUpdateManyWithoutUserNestedInput
+    Message?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     Payment?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     Testimonial?: TestimonialUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -26190,7 +26190,7 @@ export namespace Prisma {
     Comment?: CommentCreateNestedManyWithoutUserInput
     LiveSession?: LiveSessionCreateNestedManyWithoutUserInput
     LiveSessionParticipant?: LiveSessionParticipantCreateNestedManyWithoutUserInput
-    Message?: MessageCreateNestedManyWithoutUserInput
+    Message?: MessageCreateNestedManyWithoutSenderInput
     Payment?: PaymentCreateNestedManyWithoutUserInput
     Testimonial?: TestimonialCreateNestedManyWithoutUserInput
   }
@@ -26209,7 +26209,7 @@ export namespace Prisma {
     Comment?: CommentUncheckedCreateNestedManyWithoutUserInput
     LiveSession?: LiveSessionUncheckedCreateNestedManyWithoutUserInput
     LiveSessionParticipant?: LiveSessionParticipantUncheckedCreateNestedManyWithoutUserInput
-    Message?: MessageUncheckedCreateNestedManyWithoutUserInput
+    Message?: MessageUncheckedCreateNestedManyWithoutSenderInput
     Payment?: PaymentUncheckedCreateNestedManyWithoutUserInput
     Testimonial?: TestimonialUncheckedCreateNestedManyWithoutUserInput
   }
@@ -26243,7 +26243,7 @@ export namespace Prisma {
     Comment?: CommentUpdateManyWithoutUserNestedInput
     LiveSession?: LiveSessionUpdateManyWithoutUserNestedInput
     LiveSessionParticipant?: LiveSessionParticipantUpdateManyWithoutUserNestedInput
-    Message?: MessageUpdateManyWithoutUserNestedInput
+    Message?: MessageUpdateManyWithoutSenderNestedInput
     Payment?: PaymentUpdateManyWithoutUserNestedInput
     Testimonial?: TestimonialUpdateManyWithoutUserNestedInput
   }
@@ -26262,7 +26262,7 @@ export namespace Prisma {
     Comment?: CommentUncheckedUpdateManyWithoutUserNestedInput
     LiveSession?: LiveSessionUncheckedUpdateManyWithoutUserNestedInput
     LiveSessionParticipant?: LiveSessionParticipantUncheckedUpdateManyWithoutUserNestedInput
-    Message?: MessageUncheckedUpdateManyWithoutUserNestedInput
+    Message?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     Payment?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     Testimonial?: TestimonialUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -26280,7 +26280,7 @@ export namespace Prisma {
     Comment?: CommentCreateNestedManyWithoutUserInput
     Document?: DocumentCreateNestedManyWithoutUserInput
     LiveSessionParticipant?: LiveSessionParticipantCreateNestedManyWithoutUserInput
-    Message?: MessageCreateNestedManyWithoutUserInput
+    Message?: MessageCreateNestedManyWithoutSenderInput
     Payment?: PaymentCreateNestedManyWithoutUserInput
     Testimonial?: TestimonialCreateNestedManyWithoutUserInput
   }
@@ -26299,7 +26299,7 @@ export namespace Prisma {
     Comment?: CommentUncheckedCreateNestedManyWithoutUserInput
     Document?: DocumentUncheckedCreateNestedManyWithoutUserInput
     LiveSessionParticipant?: LiveSessionParticipantUncheckedCreateNestedManyWithoutUserInput
-    Message?: MessageUncheckedCreateNestedManyWithoutUserInput
+    Message?: MessageUncheckedCreateNestedManyWithoutSenderInput
     Payment?: PaymentUncheckedCreateNestedManyWithoutUserInput
     Testimonial?: TestimonialUncheckedCreateNestedManyWithoutUserInput
   }
@@ -26351,7 +26351,7 @@ export namespace Prisma {
     Comment?: CommentUpdateManyWithoutUserNestedInput
     Document?: DocumentUpdateManyWithoutUserNestedInput
     LiveSessionParticipant?: LiveSessionParticipantUpdateManyWithoutUserNestedInput
-    Message?: MessageUpdateManyWithoutUserNestedInput
+    Message?: MessageUpdateManyWithoutSenderNestedInput
     Payment?: PaymentUpdateManyWithoutUserNestedInput
     Testimonial?: TestimonialUpdateManyWithoutUserNestedInput
   }
@@ -26370,7 +26370,7 @@ export namespace Prisma {
     Comment?: CommentUncheckedUpdateManyWithoutUserNestedInput
     Document?: DocumentUncheckedUpdateManyWithoutUserNestedInput
     LiveSessionParticipant?: LiveSessionParticipantUncheckedUpdateManyWithoutUserNestedInput
-    Message?: MessageUncheckedUpdateManyWithoutUserNestedInput
+    Message?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     Payment?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     Testimonial?: TestimonialUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -26440,7 +26440,7 @@ export namespace Prisma {
     Comment?: CommentCreateNestedManyWithoutUserInput
     Document?: DocumentCreateNestedManyWithoutUserInput
     LiveSession?: LiveSessionCreateNestedManyWithoutUserInput
-    Message?: MessageCreateNestedManyWithoutUserInput
+    Message?: MessageCreateNestedManyWithoutSenderInput
     Payment?: PaymentCreateNestedManyWithoutUserInput
     Testimonial?: TestimonialCreateNestedManyWithoutUserInput
   }
@@ -26459,7 +26459,7 @@ export namespace Prisma {
     Comment?: CommentUncheckedCreateNestedManyWithoutUserInput
     Document?: DocumentUncheckedCreateNestedManyWithoutUserInput
     LiveSession?: LiveSessionUncheckedCreateNestedManyWithoutUserInput
-    Message?: MessageUncheckedCreateNestedManyWithoutUserInput
+    Message?: MessageUncheckedCreateNestedManyWithoutSenderInput
     Payment?: PaymentUncheckedCreateNestedManyWithoutUserInput
     Testimonial?: TestimonialUncheckedCreateNestedManyWithoutUserInput
   }
@@ -26527,7 +26527,7 @@ export namespace Prisma {
     Comment?: CommentUpdateManyWithoutUserNestedInput
     Document?: DocumentUpdateManyWithoutUserNestedInput
     LiveSession?: LiveSessionUpdateManyWithoutUserNestedInput
-    Message?: MessageUpdateManyWithoutUserNestedInput
+    Message?: MessageUpdateManyWithoutSenderNestedInput
     Payment?: PaymentUpdateManyWithoutUserNestedInput
     Testimonial?: TestimonialUpdateManyWithoutUserNestedInput
   }
@@ -26546,7 +26546,7 @@ export namespace Prisma {
     Comment?: CommentUncheckedUpdateManyWithoutUserNestedInput
     Document?: DocumentUncheckedUpdateManyWithoutUserNestedInput
     LiveSession?: LiveSessionUncheckedUpdateManyWithoutUserNestedInput
-    Message?: MessageUncheckedUpdateManyWithoutUserNestedInput
+    Message?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     Payment?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     Testimonial?: TestimonialUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -26713,7 +26713,7 @@ export namespace Prisma {
     Document?: DocumentCreateNestedManyWithoutUserInput
     LiveSession?: LiveSessionCreateNestedManyWithoutUserInput
     LiveSessionParticipant?: LiveSessionParticipantCreateNestedManyWithoutUserInput
-    Message?: MessageCreateNestedManyWithoutUserInput
+    Message?: MessageCreateNestedManyWithoutSenderInput
     Testimonial?: TestimonialCreateNestedManyWithoutUserInput
   }
 
@@ -26732,7 +26732,7 @@ export namespace Prisma {
     Document?: DocumentUncheckedCreateNestedManyWithoutUserInput
     LiveSession?: LiveSessionUncheckedCreateNestedManyWithoutUserInput
     LiveSessionParticipant?: LiveSessionParticipantUncheckedCreateNestedManyWithoutUserInput
-    Message?: MessageUncheckedCreateNestedManyWithoutUserInput
+    Message?: MessageUncheckedCreateNestedManyWithoutSenderInput
     Testimonial?: TestimonialUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -26766,7 +26766,7 @@ export namespace Prisma {
     Document?: DocumentUpdateManyWithoutUserNestedInput
     LiveSession?: LiveSessionUpdateManyWithoutUserNestedInput
     LiveSessionParticipant?: LiveSessionParticipantUpdateManyWithoutUserNestedInput
-    Message?: MessageUpdateManyWithoutUserNestedInput
+    Message?: MessageUpdateManyWithoutSenderNestedInput
     Testimonial?: TestimonialUpdateManyWithoutUserNestedInput
   }
 
@@ -26785,7 +26785,7 @@ export namespace Prisma {
     Document?: DocumentUncheckedUpdateManyWithoutUserNestedInput
     LiveSession?: LiveSessionUncheckedUpdateManyWithoutUserNestedInput
     LiveSessionParticipant?: LiveSessionParticipantUncheckedUpdateManyWithoutUserNestedInput
-    Message?: MessageUncheckedUpdateManyWithoutUserNestedInput
+    Message?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     Testimonial?: TestimonialUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -26803,7 +26803,7 @@ export namespace Prisma {
     Document?: DocumentCreateNestedManyWithoutUserInput
     LiveSession?: LiveSessionCreateNestedManyWithoutUserInput
     LiveSessionParticipant?: LiveSessionParticipantCreateNestedManyWithoutUserInput
-    Message?: MessageCreateNestedManyWithoutUserInput
+    Message?: MessageCreateNestedManyWithoutSenderInput
     Payment?: PaymentCreateNestedManyWithoutUserInput
   }
 
@@ -26822,7 +26822,7 @@ export namespace Prisma {
     Document?: DocumentUncheckedCreateNestedManyWithoutUserInput
     LiveSession?: LiveSessionUncheckedCreateNestedManyWithoutUserInput
     LiveSessionParticipant?: LiveSessionParticipantUncheckedCreateNestedManyWithoutUserInput
-    Message?: MessageUncheckedCreateNestedManyWithoutUserInput
+    Message?: MessageUncheckedCreateNestedManyWithoutSenderInput
     Payment?: PaymentUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -26856,7 +26856,7 @@ export namespace Prisma {
     Document?: DocumentUpdateManyWithoutUserNestedInput
     LiveSession?: LiveSessionUpdateManyWithoutUserNestedInput
     LiveSessionParticipant?: LiveSessionParticipantUpdateManyWithoutUserNestedInput
-    Message?: MessageUpdateManyWithoutUserNestedInput
+    Message?: MessageUpdateManyWithoutSenderNestedInput
     Payment?: PaymentUpdateManyWithoutUserNestedInput
   }
 
@@ -26875,7 +26875,7 @@ export namespace Prisma {
     Document?: DocumentUncheckedUpdateManyWithoutUserNestedInput
     LiveSession?: LiveSessionUncheckedUpdateManyWithoutUserNestedInput
     LiveSessionParticipant?: LiveSessionParticipantUncheckedUpdateManyWithoutUserNestedInput
-    Message?: MessageUncheckedUpdateManyWithoutUserNestedInput
+    Message?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     Payment?: PaymentUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -27090,14 +27090,14 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type MessageCreateWithoutUserInput = {
+  export type MessageCreateWithoutSenderInput = {
     message: string
     isRead?: boolean
     createdAt?: Date | string
     Chat: ChatCreateNestedOneWithoutMessageInput
   }
 
-  export type MessageUncheckedCreateWithoutUserInput = {
+  export type MessageUncheckedCreateWithoutSenderInput = {
     id?: number
     chatId: number
     message: string
@@ -27105,13 +27105,13 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
-  export type MessageCreateOrConnectWithoutUserInput = {
+  export type MessageCreateOrConnectWithoutSenderInput = {
     where: MessageWhereUniqueInput
-    create: XOR<MessageCreateWithoutUserInput, MessageUncheckedCreateWithoutUserInput>
+    create: XOR<MessageCreateWithoutSenderInput, MessageUncheckedCreateWithoutSenderInput>
   }
 
-  export type MessageCreateManyUserInputEnvelope = {
-    data: MessageCreateManyUserInput | MessageCreateManyUserInput[]
+  export type MessageCreateManySenderInputEnvelope = {
+    data: MessageCreateManySenderInput | MessageCreateManySenderInput[]
     skipDuplicates?: boolean
   }
 
@@ -27338,20 +27338,20 @@ export namespace Prisma {
     data: XOR<LiveSessionParticipantUpdateManyMutationInput, LiveSessionParticipantUncheckedUpdateManyWithoutUserInput>
   }
 
-  export type MessageUpsertWithWhereUniqueWithoutUserInput = {
+  export type MessageUpsertWithWhereUniqueWithoutSenderInput = {
     where: MessageWhereUniqueInput
-    update: XOR<MessageUpdateWithoutUserInput, MessageUncheckedUpdateWithoutUserInput>
-    create: XOR<MessageCreateWithoutUserInput, MessageUncheckedCreateWithoutUserInput>
+    update: XOR<MessageUpdateWithoutSenderInput, MessageUncheckedUpdateWithoutSenderInput>
+    create: XOR<MessageCreateWithoutSenderInput, MessageUncheckedCreateWithoutSenderInput>
   }
 
-  export type MessageUpdateWithWhereUniqueWithoutUserInput = {
+  export type MessageUpdateWithWhereUniqueWithoutSenderInput = {
     where: MessageWhereUniqueInput
-    data: XOR<MessageUpdateWithoutUserInput, MessageUncheckedUpdateWithoutUserInput>
+    data: XOR<MessageUpdateWithoutSenderInput, MessageUncheckedUpdateWithoutSenderInput>
   }
 
-  export type MessageUpdateManyWithWhereWithoutUserInput = {
+  export type MessageUpdateManyWithWhereWithoutSenderInput = {
     where: MessageScalarWhereInput
-    data: XOR<MessageUpdateManyMutationInput, MessageUncheckedUpdateManyWithoutUserInput>
+    data: XOR<MessageUpdateManyMutationInput, MessageUncheckedUpdateManyWithoutSenderInput>
   }
 
   export type PaymentUpsertWithWhereUniqueWithoutUserInput = {
@@ -27469,7 +27469,7 @@ export namespace Prisma {
     message?: StringFieldUpdateOperationsInput | string
     isRead?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    User?: UserUpdateOneRequiredWithoutMessageNestedInput
+    sender?: UserUpdateOneRequiredWithoutMessageNestedInput
   }
 
   export type MessageUncheckedUpdateWithoutChatInput = {
@@ -27575,7 +27575,7 @@ export namespace Prisma {
     sessionId: number
   }
 
-  export type MessageCreateManyUserInput = {
+  export type MessageCreateManySenderInput = {
     id?: number
     chatId: number
     message: string
@@ -27762,14 +27762,14 @@ export namespace Prisma {
     sessionId?: IntFieldUpdateOperationsInput | number
   }
 
-  export type MessageUpdateWithoutUserInput = {
+  export type MessageUpdateWithoutSenderInput = {
     message?: StringFieldUpdateOperationsInput | string
     isRead?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Chat?: ChatUpdateOneRequiredWithoutMessageNestedInput
   }
 
-  export type MessageUncheckedUpdateWithoutUserInput = {
+  export type MessageUncheckedUpdateWithoutSenderInput = {
     id?: IntFieldUpdateOperationsInput | number
     chatId?: IntFieldUpdateOperationsInput | number
     message?: StringFieldUpdateOperationsInput | string
@@ -27777,7 +27777,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type MessageUncheckedUpdateManyWithoutUserInput = {
+  export type MessageUncheckedUpdateManyWithoutSenderInput = {
     id?: IntFieldUpdateOperationsInput | number
     chatId?: IntFieldUpdateOperationsInput | number
     message?: StringFieldUpdateOperationsInput | string

@@ -89,7 +89,7 @@ export default async function createUser(req:Request, res:Response){
         await client.user.create({data:{
             email:req.body.email,
             name:fullName,
-            role:req.body.role
+            role:"EMPLOYEE"
         }})
 
         res.status(200).json({

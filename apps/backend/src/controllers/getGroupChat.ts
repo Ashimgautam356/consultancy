@@ -1,23 +1,22 @@
-// import { Request,Response } from "express";
-// import { PrismaClient } from "@prisma/client";
+import { Request,Response } from "express";
+import { prismaClient as client } from "@repo/db/client";
 
 
 
-// export default async function getGroupChat (req:Request, res:Response){
+export default async function getGroupChat (req:Request, res:Response){
 
-//     const client = new PrismaClient();
 
-//     const userId = req.body.userId; 
+    const userId = req.body.userId; 
 
-//     try{
-//         const groupChats = await client.chat.findMany({where:{
-//             chatType: "GROUP"
-//         }})
+    try{
+        const groupChats = await client.chat.findMany({where:{
+            chatType: "GROUP"
+        }})
 
-//         res.status(200).json({
-//             groupChats
-//         })
-//     }catch(err){
-//         console.log(err)
-//     }
-// }
+        res.status(200).json({
+            groupChats
+        })
+    }catch(err){
+        console.log(err)
+    }
+}
