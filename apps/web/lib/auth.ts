@@ -32,8 +32,6 @@ export const authOptions = {
                         return null
                     }
 
-                    console.log(credentials.email)
-                    console.log(credentials.password)
 
 
                     const user2 = await prisma.user.findFirst({
