@@ -1,6 +1,6 @@
 import express, { Router } from 'express'
 import { userRouter } from './student';
-// import { employeeRouter } from './employee';
+import { employeeRouter } from './employee';
 // import { adminRouter } from './admin';
 // // import getOldMessage from '../controllers/room/getOldMessage';
 // import getCoutnry from '../controllers/getCountry';
@@ -13,7 +13,7 @@ import { userRouter } from './student';
 export const router:Router =  express.Router();
 
 router.use('/student',userRouter)
-// router.use('/employee',employeeRouter)
+router.use('/employee',employeeRouter)
 // router.use("/admin",adminRouter)
 
 

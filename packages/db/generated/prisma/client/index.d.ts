@@ -22175,7 +22175,7 @@ export namespace Prisma {
     phone: string
     role?: $Enums.Role
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
     address?: string | null
   }
 
@@ -22188,7 +22188,7 @@ export namespace Prisma {
     phone: string
     role?: $Enums.Role
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
     address?: string | null
   }
 
@@ -22226,7 +22226,7 @@ export namespace Prisma {
     phone: string
     role?: $Enums.Role
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
     address?: string | null
   }
 
@@ -22587,7 +22587,7 @@ export namespace Prisma {
     phone: string
     role?: $Enums.Role
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
     address?: string | null
   }
 
@@ -22600,7 +22600,7 @@ export namespace Prisma {
     phone: string
     role?: $Enums.Role
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
     address?: string | null
   }
 
@@ -22638,7 +22638,7 @@ export namespace Prisma {
     phone: string
     role?: $Enums.Role
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
     address?: string | null
   }
 
