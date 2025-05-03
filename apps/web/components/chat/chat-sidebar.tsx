@@ -124,7 +124,7 @@ export  function ChatSidebar({ onSelectChat, selectedChatId,onSelectSocket,user 
             {groupChat.map((chat:any) => (
               <li
                 key={chat.id}
-                className={`hover:bg-gray-50 cursor-pointer ${selectedChatId === chat.id ? "bg-indigo-50" : ""}`}
+                className={`hover:bg-gray-50 cursor-pointer ${selectedChatId == chat.id ? "bg-indigo-50" : ""}`}
                 onClick={()=>selectGroupHandler(chat.id)}
               >
                 <div className="flex items-center px-4 py-3">

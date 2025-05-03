@@ -71,6 +71,18 @@ wss.on('connection',function connection(ws,request){
         // for now any one can join the room , we have to first  check the db first that this room does 
         // exist or not , and then we can do other moidficaiton like this user can join or not and other modification
 
+        console.log(parsedData)
+        
+        const isRoomExist = await client.chat.findFirst({where:{
+            id:parsedData.roomId
+        }})
+
+        if(!isRoomExist){
+            console.log("room doesn't exist")
+            return null
+        }
+
+
         const user = users.find(x => x.ws ===ws )
         user?.rooms.push(parsedData.roomId);
 
@@ -84,7 +96,9 @@ wss.on('connection',function connection(ws,request){
 
         user.rooms = user?.rooms.filter(x => x===parsedData.room);
     }
+
     if(parsedData.type === 'chat'){
+
         const roomId = parsedData.roomId;
         const message = JSON.parse(parsedData.message); 
         // this arch is slow i have to put this in a que to make it more optimitze
@@ -92,9 +106,25 @@ wss.on('connection',function connection(ws,request){
         const existingParticipant = await client.chatParticipant.findUnique({
             where: {
               chatId_userId: { chatId: roomId, userId: userId }
+            },
+            include:{
+                User:{
+                    select:{
+                        id:true,
+                        name:true,
+                        imgUrl:true
+                    }
+                }
             }
           });
-          
+        
+        const userOne = await client.user.findUnique({
+            where:{id: userId}
+        })
+
+
+        //   insert admin frist when he/she create the room
+
           if (!existingParticipant) {
             await client.chatParticipant.create({
               data: {
@@ -118,7 +148,12 @@ wss.on('connection',function connection(ws,request){
                     type:"chat",
                     message:message.newMessage,
                     roomId,
-                    senderId:userId
+                    senderId:userId,
+                    sender:{
+                        id: userOne?.id,
+                        name:userOne?.name, 
+                        image:userOne?.imgUrl
+                    }
                 }))
             }
         })

@@ -12,7 +12,9 @@ export default async function getOldMessage(req:Request, res: Response) {
         include:{
             sender:{
                 select:{
-                    name:true
+                    name:true,
+                    imgUrl:true,
+                    id:true,
                 }
             }
         },

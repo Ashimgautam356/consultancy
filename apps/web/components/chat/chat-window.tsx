@@ -24,6 +24,7 @@ export function ChatWindow({ chatId, onBack, isMobile, selectedSocket,user }: Ch
   const [messages, setMessages] = useState<any[]>([])
   const [toAppend, setToAppend] = useState<any[]>([])
 
+  const [count, setCount] = useState(0)
   const [newMessage, setNewMessage] = useState("")
   const [chat, setChat] = useState<any>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
@@ -33,6 +34,7 @@ export function ChatWindow({ chatId, onBack, isMobile, selectedSocket,user }: Ch
     if (chatId) {
       axios.get(`http://localhost:3005/api/v1/chat/${chatId}`, {  headers:{Authorization:`Bearer ${user.jwtToken}`} }).then(res => {
         if (res.status == 200) {
+          setCount(res.data?.countmember)
           setChat(res.data?.groupChats)
         }
       })
@@ -41,7 +43,7 @@ export function ChatWindow({ chatId, onBack, isMobile, selectedSocket,user }: Ch
       axios.get(`http://localhost:3005/api/v1/message/${chatId}`, { headers:{Authorization:`Bearer ${user.jwtToken}`} }).then(res => {
         if (res.status == 200) {
           setMessages(res.data?.messages.map((msg:any)=>{
-            return {senderId:msg.senderId,message:msg.message}
+            return {createdAt:msg.createdAt, senderId:msg.senderId,message:msg.message,sender:{id:msg.sender.id, imgUrl:msg.sender.imgUrl, name:msg.sender.name}}
           }))
         }
       })
@@ -52,10 +54,10 @@ export function ChatWindow({ chatId, onBack, isMobile, selectedSocket,user }: Ch
     }
   }, [chatId])
 
-  useEffect(() => {
-    // Scroll to bottom when messages change
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-  }, [messages])
+  // useEffect(() => {
+  //   // Scroll to bottom when messages change
+  //   messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+  // }, [messages])
 
 
   const handleSendMessage = (e: any) => {
@@ -81,7 +83,6 @@ export function ChatWindow({ chatId, onBack, isMobile, selectedSocket,user }: Ch
 
   }
 
-
   useEffect(() => {
     if (!selectedSocket) return;
   
@@ -90,9 +91,14 @@ export function ChatWindow({ chatId, onBack, isMobile, selectedSocket,user }: Ch
         const data = JSON.parse(event.data);
         if (data.type === "chat") {
           setMessages((prev) => [...prev, {
-
             senderId: data.senderId,
-            message: data.message
+            message: data.message,
+            createdAt:Date.now(),
+            sender:{
+              id:user.id, 
+              name:user.name, 
+              imgUrl:user.imgUrl
+            }
           }]);
         }
       } catch (err) {
@@ -136,9 +142,6 @@ export function ChatWindow({ chatId, onBack, isMobile, selectedSocket,user }: Ch
     )
   }
 
-
-
-
   return (
     <div className="flex-1 flex flex-col bg-gray-50">
       {/* Chat header */}
@@ -179,7 +182,7 @@ export function ChatWindow({ chatId, onBack, isMobile, selectedSocket,user }: Ch
             <div>
               <h2 className="text-sm font-medium text-gray-900">{chat[0].chatName}</h2>
               <p className="text-xs text-gray-500">
-                {chat[0].isPrivate ? (chat[0].online ? "Online" : "Offline") : `${chat.memberCount} members`}
+                {chat[0].isPrivate ? (chat[0].online ? "Online" : "Offline") : `${count} members`}
               </p>
             </div>
           </>
@@ -188,7 +191,7 @@ export function ChatWindow({ chatId, onBack, isMobile, selectedSocket,user }: Ch
 
       {/* Messages */}
       <div className="relative flex-1 overflow-y-auto p-4">
-        <div className="space-y-4 border border-">
+        <div className="space-y-4 ">
           {messages.map((message,id) => {
             const isCurrentUser = message.senderId == user.id
 
@@ -204,8 +207,8 @@ export function ChatWindow({ chatId, onBack, isMobile, selectedSocket,user }: Ch
                       ) : (
                         <div className="relative h-8 w-8 rounded-full overflow-hidden">
                           <Image
-                            src={chat.avatar || "/placeholder.svg?height=32&width=32"}
-                            alt={chat.chatName}
+                            src={chat[0].image || "/placeholder.svg?height=32&width=32"}
+                            alt={chat[0].chatName}
                             fill
                             className="object-cover"
                           />
@@ -213,14 +216,18 @@ export function ChatWindow({ chatId, onBack, isMobile, selectedSocket,user }: Ch
                       )}
                     </div>
                   )}
-
+  
                   <div
                     className={`px-4 py-2 rounded-lg max-w-xs lg:max-w-md ${isCurrentUser
                         ? "bg-indigo-600 text-white rounded-br-none"
                         : "bg-white text-gray-800 rounded-bl-none shadow-sm"
                       }`}
                   >
+                    {!isCurrentUser && <p className="text-xs pb-2">{message.sender.name}</p> }
+
                     <p className="text-sm">{message.message}</p>
+                      {/* message time */}
+                    <p className="text-xs text-right">{new Date(message.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
                     <div
                       className={`text-xs mt-1 flex justify-end ${isCurrentUser ? "text-indigo-200" : "text-gray-500"}`}
                     >
