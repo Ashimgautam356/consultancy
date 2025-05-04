@@ -3,55 +3,67 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import axios from "axios"
 import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+
+const SignupSchema = z
+  .object({
+    firstName: z.string().min(1, "First name is required"),
+    lastName: z.string().min(1, "Last name is required"),
+    email: z.string().min(1, "Email is required").email("Invalid email"),
+    phone: z
+      .string()
+      .min(10, "Phone must be 10 digits")
+      .max(10, "Phone must be 10 digits"),
+    country: z.string().min(1, "Country is required"),
+    password: z.string().min(6, "Password must be at least 6 characters"),
+    confirmPassword: z.string().min(1, "Please confirm your password"),
+    terms: z.literal(true, {
+      errorMap: () => ({ message: "You must agree to the terms" }),
+    }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  })
+
+type SignupFormValues = z.infer<typeof SignupSchema>
 
 export default function SignupPage() {
-  const [firstName, setFirstName] = useState("")
-  const [lastName, setLastName] = useState("")
-  const [email,setEmail] = useState("")
-  const [phone, setPhone] = useState("")
-  const [country, setCountry] = useState("")
-  const [password, setPassword] = useState("")
-  const [countries, setCountries] = useState([])
-  
-
   const router = useRouter()
+  const [countries, setCountries] = useState<{ id: string; country: string }[]>([])
 
-  // Fetch countries from API when component mounts
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm<SignupFormValues>({
+    resolver: zodResolver(SignupSchema),
+  })
+
   useEffect(() => {
-     function fetchCountries() {
-      try {
-         axios.get("http://localhost:3005/api/v1/country").then(res=>{
-          if (res.status !== 200) {
-            throw new Error("Failed to fetch countries")
-          }
-          // Adjust this if your API response structure is different
-          setCountries(res.data?.countries)
-        })
-        
-      } catch (error) {
-        console.error("Error fetching countries:", error)
-      }
-    }
-    fetchCountries()
+    axios
+      .get("http://localhost:3005/api/v1/country")
+      .then((res) => setCountries(res.data?.countries || []))
+      .catch((err) => console.error("Error fetching countries:", err))
   }, [])
 
-  async function handleSubmit(e:any){
-      e.preventDefault()
-    try{
-      console.log(email,firstName,lastName,phone,password)
-        const response =  axios.post("http://localhost:3005/api/v1/student/signup",{
-          email:email,
-          firstName:firstName, 
-          lastName:lastName,
-          phone:phone,
-          password:password
-        }).then(res=> {if(res.status===200){
-          router.push('/auth/login')
-        }})
-    }catch(err){
+  const onSubmit = async (data: SignupFormValues) => {
+    try {
+      const { confirmPassword, terms, ...rest } = data
+      const res = await axios.post("http://localhost:3005/api/v1/student/signup", rest)
+      if (res.status === 200) {
+        router.push("/signin")
+      }
+      
+    } catch (err: any) {
       console.log(err)
+      setError("root",{type:"custom",message:`${err.response.data.message}`})
     }
   }
+
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
@@ -78,134 +90,91 @@ export default function SignupPage() {
           <p className="text-gray-600">Sign up to access premium features and personalized guidance</p>
         </div>
 
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">
-                First name
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">First name</label>
               <input
-                id="firstName"
-                name="firstName"
-                type="text"
-                autoComplete="given-name"
-                required
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                {...register("firstName")}
+                className="w-full px-3 py-2 border border-gray-400 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               />
+              {errors.firstName && <p className="text-red-500 text-xs">{errors.firstName.message}</p>}
             </div>
             <div>
-              <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">
-                Last name
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Last name</label>
               <input
-                id="lastName"
-                name="lastName"
-                type="text"
-                autoComplete="family-name"
-                required
-                value={lastName}
-                onChange={(e)=>setLastName(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                {...register("lastName")}
+                className="w-full px-3 py-2 border border-gray-400 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               />
+              {errors.lastName && <p className="text-red-500 text-xs">{errors.lastName.message}</p>}
             </div>
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-              Email
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
             <input
-              id="email"
-              name="email"
               type="email"
-              autoComplete="email"
-              required
-              value={email}
-              onChange={(e)=>setEmail(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              {...register("email")}
+              className="w-full px-3 py-2 border border-gray-400 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               placeholder="name@example.com"
             />
+            {errors.email && <p className="text-red-500 text-xs">{errors.email.message}</p>}
           </div>
 
-          {/* Phone Input */}
           <div>
-            <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-              Phone
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
             <input
-              id="phone"
-              name="phone"
               type="tel"
-              required
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              placeholder="e.g., +1 555-555-5555"
+              {...register("phone")}
+              className="w-full px-3 py-2 border border-gray-400 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              placeholder="e.g., 9800000000"
             />
+            {errors.phone && <p className="text-red-500 text-xs">{errors.phone.message}</p>}
           </div>
 
-          {/* Country Select */}
           <div>
-            <label htmlFor="country" className="block text-sm font-medium text-gray-700 mb-1">
-              Country
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Country</label>
             <select
-              id="country"
-              name="country"
-              required
-              value={country}
-              onChange={(e) => setCountry(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              {...register("country")}
+              className="w-full px-3 py-2 border border-gray-400 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
             >
               <option value="">Select your country</option>
-              {countries.map((item:any) => (
+              {countries.map((item) => (
                 <option key={item.id} value={item.country}>
                   {item.country}
                 </option>
               ))}
             </select>
+            {errors.country && <p className="text-red-500 text-xs">{errors.country.message}</p>}
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-              Password
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
             <input
-              id="password"
-              name="password"
               type="password"
-              autoComplete="new-password"
-              required
-              onChange={e=>setPassword(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              {...register("password")}
+              className="w-full px-3 py-2 border border-gray-400 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
             />
+            {errors.password && <p className="text-red-500 text-xs">{errors.password.message}</p>}
           </div>
 
           <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
-              Confirm password
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Confirm password</label>
             <input
-              id="confirmPassword"
-              name="confirmPassword"
               type="password"
-              autoComplete="new-password"
-              required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              {...register("confirmPassword")}
+              className="w-full px-3 py-2 border border-gray-400 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
             />
+            {errors.confirmPassword && <p className="text-red-500 text-xs">{errors.confirmPassword.message}</p>}
           </div>
 
           <div className="flex items-center">
             <input
-              id="terms"
-              name="terms"
               type="checkbox"
-              required
+              {...register("terms")}
               className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
             />
-            <label htmlFor="terms" className="ml-2 block text-sm text-gray-700">
+            <label className="ml-2 block text-sm text-gray-700">
               I agree to the{" "}
               <Link href="/terms" className="text-indigo-600 hover:underline">
                 Terms of Service
@@ -216,11 +185,14 @@ export default function SignupPage() {
               </Link>
             </label>
           </div>
+          {errors.terms && <p className="text-red-500 text-xs">{errors.terms.message}</p>}
 
+          {
+              errors.root && <p className="text-red-500 text-s text-center">{errors.root.message}</p>
+            }
           <div>
             <button
               type="submit"
-              onClick={handleSubmit}
               className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               Sign up

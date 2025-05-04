@@ -1,38 +1,44 @@
 "use client"
 
 import { useForm } from "react-hook-form"
-import { useRouter } from "next/navigation"
+import { redirect } from "next/navigation"
 import Link from "next/link"
 import { signIn } from "next-auth/react"
+import z from 'zod'
+import { zodResolver } from "@hookform/resolvers/zod"
 
-type FormValues = {
-  email: string
-  password: string
-}
+
+
+const signinSchema = z.object({
+   email: z.string().min(1, "Email is required").email("Invalid email"),
+    password: z.string().min(6, "Password must be at least 6 characters"),
+})
+
+type SigninFormValue = z.infer<typeof signinSchema>
 
 export default function Signin() {
-  
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },setError,
-  } = useForm<FormValues>()
+  } = useForm<SigninFormValue>({
+    resolver: zodResolver(signinSchema)
+  })
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: SigninFormValue) => {
     try {
       const res:any = await signIn("credentials", {
         redirect:false,
         email: data.email,
         password: data.password,
-        callbackUrl: "/dashboard",
       })
-
-      if(!res.ok){
-        setError("root",{type:"custom",message:"Enter Valid Credentials!!"})
+   
+      if(res.ok){
+        redirect("/dashboard")
       }
 
     } catch (error) {
-      console.error("Login failed:", error)
+      setError("root",{type:"custom",message:"Enter Valid Credentials!!"})
     }
   }
 
