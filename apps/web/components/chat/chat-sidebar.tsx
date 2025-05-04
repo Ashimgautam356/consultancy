@@ -4,7 +4,6 @@ import { useEffect, useState } from "react"
 import Image from "next/image"
 import { mockChats } from "../../lib/mock-data"
 import axios from "axios"
-import { useSession } from "next-auth/react"
 
 
 interface ChatSidebarProps {
@@ -20,6 +19,7 @@ export  function ChatSidebar({ onSelectChat, selectedChatId,onSelectSocket,user 
   const [searchTerm, setSearchTerm] = useState("")
 
 
+  // searching the chats
   const filteredChats = mockChats.filter((chat) => {
     if (activeTab === "countries" && !chat.isPrivate) {
       return chat.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -28,6 +28,8 @@ export  function ChatSidebar({ onSelectChat, selectedChatId,onSelectSocket,user 
     }
     return false
   })
+
+
 
   const [groupChat, setGroupChat] = useState([])
 
@@ -103,12 +105,12 @@ export  function ChatSidebar({ onSelectChat, selectedChatId,onSelectSocket,user 
           >
             Country Groups
           </button>
-          <button
+          {/* <button
             className={`flex-1 py-3 text-sm font-medium ${activeTab === "private" ? "text-indigo-600 border-b-2 border-indigo-600" : "text-gray-500 hover:text-gray-700"}`}
             onClick={() => setActiveTab("private")}
           >
             Private Chats
-          </button>
+          </button> */}
         </div>
       </div>
 

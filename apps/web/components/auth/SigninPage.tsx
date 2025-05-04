@@ -1,35 +1,41 @@
 "use client"
-import { useState } from "react"
+
+import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import axios from "axios"
 import { signIn } from "next-auth/react"
 
+type FormValues = {
+  email: string
+  password: string
+}
 
 export default function Signin() {
-  const router = useRouter()
+  
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },setError,
+  } = useForm<FormValues>()
 
-  const [email ,setEmail] = useState("")
-  const [password,setPassword] = useState("")
+  const onSubmit = async (data: FormValues) => {
+    try {
+      const res:any = await signIn("credentials", {
+        redirect:false,
+        email: data.email,
+        password: data.password,
+        callbackUrl: "/dashboard",
+      })
 
+      if(!res.ok){
+        setError("root",{type:"custom",message:"Enter Valid Credentials!!"})
+      }
 
-  async function handleSubmite(e:any) {
-    e.preventDefault()
-
-    try{
-
-        const res = await signIn("credentials",{
-            redirect:true, 
-            email, 
-            password, 
-            callbackUrl:"/dashboard"
-        })
-      
-    }catch(err){
-      console.log(err)
+    } catch (error) {
+      console.error("Login failed:", error)
     }
   }
-  
+
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
@@ -56,22 +62,20 @@ export default function Signin() {
           <p className="text-gray-600">Log in to your account to access premium features</p>
         </div>
 
-        <form className="space-y-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
               Email
             </label>
             <input
               id="email"
-              name="email"
               type="email"
               autoComplete="email"
-              required
-              value={email}
-              onChange={(e:any)=>setEmail(e.target.value)}
+              {...register("email", { required: "Email is required" })}
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               placeholder="name@example.com"
             />
+            {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
           </div>
 
           <div>
@@ -85,35 +89,23 @@ export default function Signin() {
             </div>
             <input
               id="password"
-              name="password"
               type="password"
               autoComplete="current-password"
-              required
-              value={password}
-              onChange={(e:any)=>setPassword(e.target.value)}
+              {...register("password", { required: "Password is required" })}
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
             />
+            {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
           </div>
 
-          <div className="flex items-center">
-            <input
-              id="remember-me"
-              name="remember-me"
-              type="checkbox"
-              className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-            />
-            <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
-              Remember me
-            </label>
-          </div>
 
           <div>
+            {errors.root && <p className="text-red-500 text-sm mt-1 p-2">{errors.root.message}</p>}
             <button
               type="submit"
-              onClick={handleSubmite}
+              disabled={isSubmitting}
               className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              Log in
+              {isSubmitting ? "Logging in..." : "Log in"}
             </button>
           </div>
         </form>
@@ -121,7 +113,7 @@ export default function Signin() {
         <div className="mt-6 text-center text-sm">
           <p className="text-gray-600">
             Don't have an account?{" "}
-            <Link href="/auth/signup" className="font-medium text-indigo-600 hover:underline">
+            <Link href="/signup" className="font-medium text-indigo-600 hover:underline">
               Sign up
             </Link>
           </p>
@@ -130,4 +122,3 @@ export default function Signin() {
     </div>
   )
 }
-
