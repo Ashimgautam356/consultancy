@@ -2,20 +2,13 @@ import { Request,Response } from 'express'
 import z from 'zod'
 import bcrypt from 'bcrypt'
 import  {prismaClient}  from '@repo/db/client'
-
+import {SignupSchema} from '@repo/common-type'
 export default async function signup(req:Request, res:Response){
     
     console.log(prismaClient)
 
-    const UserInput = z.object({
-        email: z.string().email().max(30).min(3).trim().toLowerCase(),
-        password:z.string().min(6),
-        firstName:z.string().trim().max(40),
-        lastName:z.string().trim().max(40),
-        phone:z.string().length(10).optional()
-    })
 
-    const isValid = UserInput.safeParse({
+    const isValid = SignupSchema.safeParse({
         email:req.body.email,
         password:req.body.password,
         firstName:req.body.firstName,

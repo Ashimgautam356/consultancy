@@ -1,12 +1,16 @@
 {
   "name": "@repo/common-type",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types":"dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "build":"npx tsc -b ", 
+  "dev":"npm run build && node ./dist/index.js"
+
   },
+
   "exports": {
-    "./type": "./index.ts"
+    ".":{"import":"./dist/index.js","require": "./dist/index.js"}
   },
   "keywords": [],
   "author": "",

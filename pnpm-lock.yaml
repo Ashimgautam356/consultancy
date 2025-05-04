@@ -81,6 +81,9 @@ importers:
       '@hookform/resolvers':
         specifier: ^5.0.1
         version: 5.0.1(react-hook-form@7.56.2(react@19.1.0))
+      '@repo/common-type':
+        specifier: workspace:*
+        version: link:../../packages/common-type
       '@repo/ui':
         specifier: workspace:*
         version: link:../../packages/ui

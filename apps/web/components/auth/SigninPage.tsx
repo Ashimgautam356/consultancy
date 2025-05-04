@@ -4,28 +4,20 @@ import { useForm } from "react-hook-form"
 import { redirect } from "next/navigation"
 import Link from "next/link"
 import { signIn } from "next-auth/react"
-import z from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod"
+import {SigninSchema ,SigninSchemaForm} from '@repo/common-type'
 
-
-
-const signinSchema = z.object({
-   email: z.string().min(1, "Email is required").email("Invalid email"),
-    password: z.string().min(6, "Password must be at least 6 characters"),
-})
-
-type SigninFormValue = z.infer<typeof signinSchema>
 
 export default function Signin() {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },setError,
-  } = useForm<SigninFormValue>({
-    resolver: zodResolver(signinSchema)
+  } = useForm<SigninSchemaForm>({
+    resolver: zodResolver(SigninSchema)
   })
 
-  const onSubmit = async (data: SigninFormValue) => {
+  const onSubmit = async (data: SigninSchemaForm) => {
     try {
       const res:any = await signIn("credentials", {
         redirect:false,
@@ -36,9 +28,12 @@ export default function Signin() {
       if(res.ok){
         redirect("/dashboard")
       }
+      if(!res.ok){
+        setError("root",{type:"custom",message:"Enter Valid Credentials!!"})
+      }
 
     } catch (error) {
-      setError("root",{type:"custom",message:"Enter Valid Credentials!!"})
+      console.log(error)
     }
   }
 

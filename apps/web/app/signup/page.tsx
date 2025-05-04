@@ -4,31 +4,9 @@ import Link from "next/link"
 import axios from "axios"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
-import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
+import {SignupSchema,SignupSchemaForm} from '@repo/common-type'
 
-const SignupSchema = z
-  .object({
-    firstName: z.string().min(1, "First name is required"),
-    lastName: z.string().min(1, "Last name is required"),
-    email: z.string().min(1, "Email is required").email("Invalid email"),
-    phone: z
-      .string()
-      .min(10, "Phone must be 10 digits")
-      .max(10, "Phone must be 10 digits"),
-    country: z.string().min(1, "Country is required"),
-    password: z.string().min(6, "Password must be at least 6 characters"),
-    confirmPassword: z.string().min(1, "Please confirm your password"),
-    terms: z.literal(true, {
-      errorMap: () => ({ message: "You must agree to the terms" }),
-    }),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
-  })
-
-type SignupFormValues = z.infer<typeof SignupSchema>
 
 export default function SignupPage() {
   const router = useRouter()
@@ -39,7 +17,7 @@ export default function SignupPage() {
     handleSubmit,
     setError,
     formState: { errors },
-  } = useForm<SignupFormValues>({
+  } = useForm<SignupSchemaForm>({
     resolver: zodResolver(SignupSchema),
   })
 
@@ -50,7 +28,7 @@ export default function SignupPage() {
       .catch((err) => console.error("Error fetching countries:", err))
   }, [])
 
-  const onSubmit = async (data: SignupFormValues) => {
+  const onSubmit = async (data: SignupSchemaForm) => {
     try {
       const { confirmPassword, terms, ...rest } = data
       const res = await axios.post("http://localhost:3005/api/v1/student/signup", rest)
