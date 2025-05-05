@@ -7,17 +7,18 @@ import { useEffect } from "react"
 import { useState } from "react"
 import axios from "axios"
 import { useSession } from "next-auth/react"
+import { link } from "fs"
 
 const completedDocs = mockDocuments.filter((doc) => doc.status === "verified").length
 const totalDocs = mockDocuments.length
 const completionPercentage = Math.round((completedDocs / totalDocs) * 100)
 
 const OverView = ({setActiveTab}:{setActiveTab: (data:any)=> void}) => {
-  const [applicationStatus, setApplicationStatus] = useState("start")
+  const [applicationStatus, setApplicationStatus] = useState(null)
   const sessoin  = useSession()
   
 
-  
+
   useEffect(()=>{
     axios.get("http://localhost:3005/api/v1/student/application-status",{
       headers:{
@@ -26,11 +27,10 @@ const OverView = ({setActiveTab}:{setActiveTab: (data:any)=> void}) => {
     }).then(res=>{
       if(res.status===200){
         console.log(res)
-        if(res.data?.status){
-          setApplicationStatus(res.data?.status)
-        }
+        setApplicationStatus(res.data?.status)
       }
     })  
+
 
   },[])
   
@@ -50,66 +50,53 @@ const OverView = ({setActiveTab}:{setActiveTab: (data:any)=> void}) => {
                 <h2 className="text-xl font-bold">Application Status</h2>
                 <p className="text-gray-600 text-sm">Track your university application progress</p>
               </div>
-              <div className="space-y-6">
-                <div>
-                  <div className="flex justify-between mb-2">
-                    <div className="flex items-center">
-                      <span className="font-medium">University of Melbourne</span>
-                      <span className="ml-2 px-2 py-0.5 bg-indigo-100 text-indigo-800 text-xs rounded-full">
-                        Australia
-                      </span>
+
+              {
+                applicationStatus? (
+                  <div className="space-y-6">
+                  <div>
+                    <div className="flex justify-between mb-2">
+                      <div className="flex items-center">
+                        <span className="font-medium">University of Melbourne</span>
+                        <span className="ml-2 px-2 py-0.5 bg-indigo-100 text-indigo-800 text-xs rounded-full">
+                          Australia
+                        </span>
+                      </div>
+  
                     </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+  
+                      <div className={`bg-indigo-600 rounded-full h-2 ${color[applicationStatus]}`}></div>
+                    </div>
+                    <div className="mt-2 flex justify-between text-sm text-gray-500">
+                      <span >Application Submitted</span>
+                      <span >Documents Verified</span>
+                      <span >Offer Letter</span>
+                      <span >Visa</span>
+                    </div>
+                  </div>
+  
+                </div> 
+                ):(
+                 <h2>Select the <Link href={"/setting"} className="text-blue-500 underline" >country</Link> and <Link href={"/setting"} className="text-blue-500 underline"> University</Link> First</h2> 
+                )
+              }
 
-                  </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    {/* here is the logic to color blue line  */}
-                    <div className={`bg-indigo-600 rounded-full h-2 ${color[applicationStatus]}`}></div>
-                  </div>
-                  <div className="mt-2 flex justify-between text-sm text-gray-500">
-                    <span >Application Submitted</span>
-                    <span >Documents Verified</span>
-                    <span >Offer Letter</span>
-                    <span >Visa</span>
-                  </div>
-                </div>
 
-              </div>
             </div>
 
-            {/* Document Completion */}
+
+
             <div className="bg-white rounded-lg shadow-md p-6">
               <div className="mb-4 flex justify-between items-center">
                 <div>
                   <h2 className="text-xl font-bold">Document Completion</h2>
                   <p className="text-gray-600 text-sm">Track your document submission progress</p>
                 </div>
-                <div className="relative h-20 w-20">
-                  <svg className="w-20 h-20" viewBox="0 0 36 36">
-                    <path
-                      d="M18 2.0845
-                        a 15.9155 15.9155 0 0 1 0 31.831
-                        a 15.9155 15.9155 0 0 1 0 -31.831"
-                      fill="none"
-                      stroke="#E5E7EB"
-                      strokeWidth="3"
-                      strokeDasharray="100, 100"
-                    />
-                    <path
-                      d="M18 2.0845
-                        a 15.9155 15.9155 0 0 1 0 31.831
-                        a 15.9155 15.9155 0 0 1 0 -31.831"
-                      fill="none"
-                      stroke="#4F46E5"
-                      strokeWidth="3"
-                      strokeDasharray={`${completionPercentage}, 100`}
-                    />
-                    <text x="18" y="20.5" textAnchor="middle" fontSize="8" fill="#4F46E5" fontWeight="bold">
-                      {completionPercentage}%
-                    </text>
-                  </svg>
-                </div>
+ 
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                
                 <div className="p-4 bg-green-50 rounded-lg">
                   <div className="flex items-center">
                     <div className="rounded-full bg-green-100 p-2 mr-3">

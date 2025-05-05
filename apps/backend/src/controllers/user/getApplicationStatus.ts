@@ -32,10 +32,27 @@ export default async function getApplicationStatus(req:Request, res:Response) {
                 userId: studentId?.id
             }
         });
-        console.log(status)
+
+        const appliedOn = await prisma.appliedIn.findMany({
+            where:{
+                studentId:studentInfo.id
+            },
+            include:{
+                Universities:true, 
+                Countries: true
+            }
+        })
+
+        const documentStatus = await prisma.document.findMany({
+            where:{
+                userId: userId
+            }
+        })
 
         res.status(200).json({
-            status
+            status,
+            appliedOn,
+            documentStatus
         })
     }catch(err){
         console.log(err)

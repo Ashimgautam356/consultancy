@@ -98,8 +98,6 @@ export const authOptions = {
                         const studentInfo = await prisma.student.findUnique({
                             where:{email:credentials.email},
                         })
-
-                        const uniInfo = await prisma.universities
                          
                         const isValid = await bcrypt.compare(credentials.password, String(studentInfo?.passwordHash));
                         if (!isValid) return null;
