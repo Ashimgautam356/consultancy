@@ -69,7 +69,9 @@ model Comment {
 model Countries {
   id           Int            @id @default(autoincrement())
   country      String         @unique
+
   Universities Universities[]
+  AppliedIn    AppliedIn[]
 }
 
 model Document {
@@ -77,8 +79,25 @@ model Document {
   userId       Int
   documentType String
   status       DocumentStatus @default(PENDING)
+  // verifiedBy   
   uploadedAt   DateTime       @default(now())
   User         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+}
+
+enum AppStatus {
+  Application_Submitted
+  Documents_Verified
+  Offer_Letter
+  Visa
+  Start
+}
+
+model ApplicationStatus{
+  id          Int             @id @default(autoincrement())
+  userId      Int
+  status      AppStatus       @default(Start)
+  Student     Student       @relation(fields: [userId], references: [id] , onDelete: Cascade)
 }
 
 model Employee {
@@ -149,12 +168,16 @@ model Student {
   phone              String?
   countryOfInterest  String?
   subscriptionExpiry DateTime?
+  address            String?
+
   role               Role          @default(STUDENT)
   paymentStatus      PaymentStatus @default(PENDING)
   profileCompleted   Boolean       @default(false)
   createdAt          DateTime      @default(now())
   updatedAt          DateTime      @updatedAt
-  address            String?
+
+  AppliedIn           AppliedIn[]
+  ApplicationStatus   ApplicationStatus[]
   
 }
 
@@ -171,10 +194,24 @@ model Testimonial {
 }
 
 model Universities {
-  id        Int       @id @default(autoincrement())
-  countryId Int
-  name      String    @unique
-  Countries Countries @relation(fields: [countryId], references: [id])
+  id                  Int       @id @default(autoincrement())
+  countryId           Int
+  name                String    @unique
+  Countries           Countries @relation(fields: [countryId], references: [id])
+  AppliedIn           AppliedIn[]
+}
+
+
+model AppliedIn{
+  studentId           Int
+  uniId               Int 
+  countryId           Int
+
+  Student             Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  Universities        Universities @relation(fields: [uniId], references: [id], onDelete: Cascade)
+  Countries           Countries @relation(fields: [countryId], references: [id], onDelete: Cascade)
+
+  @@id([studentId, uniId,countryId])
 }
 
 model User {

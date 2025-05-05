@@ -10,7 +10,6 @@ type Props = {
 export  function DashboardNavbar({ children }: Props) {
   return (
     <SessionProvider>
-      <Nav />
       {children}
     </SessionProvider>
   )

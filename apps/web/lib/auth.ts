@@ -12,6 +12,7 @@ export interface session extends Session {
       role: string;
       email: string;
       name: string;
+
     };
   }
 
@@ -97,6 +98,8 @@ export const authOptions = {
                         const studentInfo = await prisma.student.findUnique({
                             where:{email:credentials.email},
                         })
+
+                        const uniInfo = await prisma.universities
                          
                         const isValid = await bcrypt.compare(credentials.password, String(studentInfo?.passwordHash));
                         if (!isValid) return null;
@@ -114,6 +117,7 @@ export const authOptions = {
                           email: user.email,
                           jwtToken: myjwt,
                           role: user.role,
+                          country: studentInfo?.countryOfInterest, 
                         };
                       }
                       

@@ -16,7 +16,7 @@ const Nav = () => {
 
     if(session.status === 'loading'){
       return (
-        <h1>loading!!!!</h1>
+        <h1> </h1>
       )
     }
     if(!session.data?.user){
@@ -26,6 +26,7 @@ const Nav = () => {
     const isActive = (path: string) => {
       return pathname === path
     }
+
   return (
     <nav className="bg-white shadow-sm sticky top-0 z-50">
     <div className="container mx-auto px-4 py-4 flex justify-between items-center">
