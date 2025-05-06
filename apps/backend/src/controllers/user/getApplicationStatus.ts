@@ -26,7 +26,6 @@ export default async function getApplicationStatus(req:Request, res:Response) {
             }
         })
 
-        console.log(studentId)
         const status = await prisma.applicationStatus.findFirst({
             where:{
                 userId: studentId?.id

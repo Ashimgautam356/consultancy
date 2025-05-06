@@ -8,13 +8,13 @@ import { useState } from "react"
 import axios from "axios"
 import { useSession } from "next-auth/react"
 import { link } from "fs"
+import { string } from "zod"
 
-const completedDocs = mockDocuments.filter((doc) => doc.status === "verified").length
-const totalDocs = mockDocuments.length
-const completionPercentage = Math.round((completedDocs / totalDocs) * 100)
+
+
 
 const OverView = ({setActiveTab}:{setActiveTab: (data:any)=> void}) => {
-  const [applicationStatus, setApplicationStatus] = useState(null)
+  const [applicationStatus, setApplicationStatus] = useState<any>(null)
   const sessoin  = useSession()
   
 
@@ -42,6 +42,9 @@ const OverView = ({setActiveTab}:{setActiveTab: (data:any)=> void}) => {
   Visa:"w-6/6",
  
   }
+
+  const completedDocs = applicationStatus?.documentStatus.filter((doc:any) => doc.status === "VERIFIED").length
+  const pendingDocs = applicationStatus?.documentStatus.filter((doc:any) => doc.status === "PENDING").length
   return (
     <div className="space-y-8">
             {/* Application Status */}
@@ -112,10 +115,11 @@ const OverView = ({setActiveTab}:{setActiveTab: (data:any)=> void}) => {
                     </div>
                     <div>
                       <h3 className="font-medium">Completed</h3>
-                      <p className="text-sm text-gray-600">{completedDocs} documents</p>
+                      <p className="text-sm text-gray-600">{completedDocs? completedDocs: 0} documents</p>
                     </div>
                   </div>
                 </div>
+
                 <div className="p-4 bg-yellow-50 rounded-lg">
                   <div className="flex items-center">
                     <div className="rounded-full bg-yellow-100 p-2 mr-3">
@@ -136,14 +140,15 @@ const OverView = ({setActiveTab}:{setActiveTab: (data:any)=> void}) => {
                     </div>
                     <div>
                       <h3 className="font-medium">Pending</h3>
-                      <p className="text-sm text-gray-600">{totalDocs - completedDocs} documents</p>
+                      <p className="text-sm text-gray-600">{pendingDocs? pendingDocs: 0} documents</p>
                     </div>
                   </div>
                 </div>
               </div>
+              
               <div className="mt-4">
                 <Link
-                  href="/dashboard/documents"
+                  href="/documents"
                   className="text-indigo-600 hover:text-indigo-800 text-sm font-medium flex items-center"
                 >
                   View all documents
@@ -159,6 +164,8 @@ const OverView = ({setActiveTab}:{setActiveTab: (data:any)=> void}) => {
                 </Link>
               </div>
             </div>
+
+
 
             {/* Recent Videos */}
             <div className="bg-white rounded-lg shadow-md p-6">
