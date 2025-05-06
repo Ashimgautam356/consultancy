@@ -16,6 +16,7 @@ interface ChatSidebarProps {
 export  function ChatSidebar({ onSelectChat, selectedChatId,onSelectSocket,user }: ChatSidebarProps) {
 
   const [activeTab, setActiveTab] = useState<"group" | "private">("group")
+  const [filteredGroupChat, setFilteredGroupChat] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState("")
 
 
@@ -33,11 +34,14 @@ export  function ChatSidebar({ onSelectChat, selectedChatId,onSelectSocket,user 
 
   const [groupChat, setGroupChat] = useState([])
 
+  
+
   useEffect(()=>{
        axios.get("http://localhost:3005/api/v1/chat",{headers:{Authorization:`Bearer ${user}`}}).then(res=>{
         if(res.status==200){
           console.log(res.data)
           setGroupChat(res?.data?.groupChats)
+          setFilteredGroupChat(res.data.groupChats);
         }
       }).catch(err=>{
         console.log(err)
@@ -69,6 +73,21 @@ export  function ChatSidebar({ onSelectChat, selectedChatId,onSelectSocket,user 
           ws.close()
         }
   },[selectedChatId])
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      if (!searchTerm.trim()) {
+        setFilteredGroupChat(groupChat);
+      } else {
+        const searchedValue = groupChat.filter((chat: any) =>
+          chat.chatName.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setFilteredGroupChat(searchedValue);
+      }
+    }, 300);
+  
+    return () => clearTimeout(handler);
+  }, [searchTerm, groupChat]);
 
 
   return (
@@ -119,7 +138,7 @@ export  function ChatSidebar({ onSelectChat, selectedChatId,onSelectSocket,user 
 
       <div className="flex-1 overflow-y-auto">
 
-        {groupChat.length === 0 ? (
+        {filteredGroupChat.length === 0 ? (
           <div className="p-4 text-center text-gray-500">
             {searchTerm
               ? "No conversations found"
@@ -129,7 +148,7 @@ export  function ChatSidebar({ onSelectChat, selectedChatId,onSelectSocket,user 
           <ul className="divide-y divide-gray-200">
             {
               activeTab == "group"?(
-                groupChat.filter((chat:any)=> chat.chatType == "GROUP").map((chat:any) => (
+                filteredGroupChat.filter((chat:any)=> chat.chatType == "GROUP").map((chat:any) => (
                   
                   <li
                     key={chat.id}
@@ -172,7 +191,7 @@ export  function ChatSidebar({ onSelectChat, selectedChatId,onSelectSocket,user 
                   </li>
                 ))
               ):(
-                groupChat.filter((chat:any)=> chat.chatType == "PRIVATE").map((chat:any) => (
+                filteredGroupChat.filter((chat:any)=> chat.chatType == "PRIVATE").map((chat:any) => (
                   <li
                     key={chat.id}
                     className={`hover:bg-gray-50 cursor-pointer ${selectedChatId == chat.id ? "bg-indigo-50" : ""}`}
