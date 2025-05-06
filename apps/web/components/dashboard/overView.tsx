@@ -26,7 +26,6 @@ const OverView = ({setActiveTab}:{setActiveTab: (data:any)=> void}) => {
       }
     }).then(res=>{
       if(res.status===200){
-        console.log(res)
         setApplicationStatus(res.data?.status)
       }
     })  

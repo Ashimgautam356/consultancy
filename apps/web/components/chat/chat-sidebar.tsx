@@ -15,13 +15,13 @@ interface ChatSidebarProps {
 
 export  function ChatSidebar({ onSelectChat, selectedChatId,onSelectSocket,user }: ChatSidebarProps) {
 
-  const [activeTab, setActiveTab] = useState<"countries" | "private">("countries")
+  const [activeTab, setActiveTab] = useState<"group" | "private">("group")
   const [searchTerm, setSearchTerm] = useState("")
 
 
   // searching the chats
   const filteredChats = mockChats.filter((chat) => {
-    if (activeTab === "countries" && !chat.isPrivate) {
+    if (activeTab === "group" && !chat.isPrivate) {
       return chat.name.toLowerCase().includes(searchTerm.toLowerCase())
     } else if (activeTab === "private" && chat.isPrivate) {
       return chat.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -36,6 +36,7 @@ export  function ChatSidebar({ onSelectChat, selectedChatId,onSelectSocket,user 
   useEffect(()=>{
        axios.get("http://localhost:3005/api/v1/chat",{headers:{Authorization:`Bearer ${user}`}}).then(res=>{
         if(res.status==200){
+          console.log(res.data)
           setGroupChat(res?.data?.groupChats)
         }
       }).catch(err=>{
@@ -68,6 +69,8 @@ export  function ChatSidebar({ onSelectChat, selectedChatId,onSelectSocket,user 
           ws.close()
         }
   },[selectedChatId])
+
+
   return (
     <div className="w-full md:w-80 bg-white border-r border-gray-200 flex flex-col h-full">
       <div className="p-4 border-b border-gray-200">
@@ -100,70 +103,119 @@ export  function ChatSidebar({ onSelectChat, selectedChatId,onSelectSocket,user 
       <div className="border-b border-gray-200">
         <div className="flex">
           <button
-            className={`flex-1 py-3 text-sm font-medium ${activeTab === "countries" ? "text-indigo-600 border-b-2 border-indigo-600" : "text-gray-500 hover:text-gray-700"}`}
-            onClick={() => setActiveTab("countries")}
+            className={`flex-1 py-3 text-sm font-medium ${activeTab === "group" ? "text-indigo-600 border-b-2 border-indigo-600" : "text-gray-500 hover:text-gray-700"}`}
+            onClick={() => setActiveTab("group")}
           >
             Country Groups
           </button>
-          {/* <button
+          <button
             className={`flex-1 py-3 text-sm font-medium ${activeTab === "private" ? "text-indigo-600 border-b-2 border-indigo-600" : "text-gray-500 hover:text-gray-700"}`}
             onClick={() => setActiveTab("private")}
           >
             Private Chats
-          </button> */}
+          </button>
         </div>
       </div>
 
       <div className="flex-1 overflow-y-auto">
+
         {groupChat.length === 0 ? (
           <div className="p-4 text-center text-gray-500">
             {searchTerm
               ? "No conversations found"
-              : `No ${activeTab === "countries" ? "country groups" : "private chats"} available`}
+              : `No ${activeTab === "group" ? "country groups" : "private chats"} available`}
           </div>
         ) : (
           <ul className="divide-y divide-gray-200">
-            {groupChat.map((chat:any) => (
-              <li
-                key={chat.id}
-                className={`hover:bg-gray-50 cursor-pointer ${selectedChatId == chat.id ? "bg-indigo-50" : ""}`}
-                onClick={()=>selectGroupHandler(chat.id)}
-              >
-                <div className="flex items-center px-4 py-3">
-                  <div className="relative h-12 w-12 rounded-full overflow-hidden mr-3 flex-shrink-0">
-                    {chat.isPrivate ? (
-                      <Image
-                        src={chat.avatar || "/placeholder.svg?height=48&width=48"}
-                        alt={chat.chatName}
-                        fill
-                        className="object-cover"
-                      />
-                    ) : (
-                      <div className="h-full w-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-lg">
-                        {chat.roomLink.substring(0, 2).toUpperCase()}
+            {
+              activeTab == "group"?(
+                groupChat.filter((chat:any)=> chat.chatType == "GROUP").map((chat:any) => (
+                  
+                  <li
+                    key={chat.id}
+                    className={`hover:bg-gray-50 cursor-pointer ${selectedChatId == chat.id ? "bg-indigo-50" : ""}`}
+                    onClick={()=>selectGroupHandler(chat.id)}
+                  >
+                    <div className="flex items-center px-4 py-3">
+                      <div className="relative h-12 w-12 rounded-full overflow-hidden mr-3 flex-shrink-0">
+                        {chat.isPrivate ? (
+                          <Image
+                            src={chat.avatar || "/placeholder.svg?height=48&width=48"}
+                            alt={chat.chatName}
+                            fill
+                            className="object-cover"
+                          />
+                        ) : (
+                          <div className="h-full w-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-lg">
+                            {chat.roomLink.substring(0, 2).toUpperCase()}
+                          </div>
+                        )}
+                        {chat && (
+                          <span className="absolute bottom-0 right-0 block h-3 w-3 rounded-full bg-green-400 border-2 border-white"></span>
+                        )}
                       </div>
-                    )}
-                    {chat && (
-                      <span className="absolute bottom-0 right-0 block h-3 w-3 rounded-full bg-green-400 border-2 border-white"></span>
-                    )}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center justify-between">
-                      <p className="text-sm font-medium text-gray-900 truncate">{chat.chatName}</p>
-                      <p className="text-xs text-gray-500">{chat.lastMessageTime}</p>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center justify-between">
+                          <p className="text-sm font-medium text-gray-900 truncate">{chat.chatName}</p>
+                          <p className="text-xs text-gray-500">{chat.lastMessageTime}</p>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <p className="text-sm text-gray-500 truncate">{chat.lastMessage}</p>
+                          {chat.unreadCount > 0 && (
+                            <span className="inline-flex items-center justify-center h-5 w-5 rounded-full bg-indigo-600 text-xs font-medium text-white">
+                              {chat.unreadCount}
+                            </span>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex items-center justify-between">
-                      <p className="text-sm text-gray-500 truncate">{chat.lastMessage}</p>
-                      {chat.unreadCount > 0 && (
-                        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full bg-indigo-600 text-xs font-medium text-white">
-                          {chat.unreadCount}
-                        </span>
-                      )}
+                  </li>
+                ))
+              ):(
+                groupChat.filter((chat:any)=> chat.chatType == "PRIVATE").map((chat:any) => (
+                  <li
+                    key={chat.id}
+                    className={`hover:bg-gray-50 cursor-pointer ${selectedChatId == chat.id ? "bg-indigo-50" : ""}`}
+                    onClick={()=>selectGroupHandler(chat.id)}
+                  >
+                    <div className="flex items-center px-4 py-3">
+                      <div className="relative h-12 w-12 rounded-full overflow-hidden mr-3 flex-shrink-0">
+                        {chat.isPrivate ? (
+                          <Image
+                            src={chat.avatar || "/placeholder.svg?height=48&width=48"}
+                            alt={chat.chatName}
+                            fill
+                            className="object-cover"
+                          />
+                        ) : (
+                          <div className="h-full w-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-lg">
+                            {chat.roomLink.substring(0, 2).toUpperCase()}
+                          </div>
+                        )}
+                        {chat && (
+                          <span className="absolute bottom-0 right-0 block h-3 w-3 rounded-full bg-green-400 border-2 border-white"></span>
+                        )}
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center justify-between">
+                          <p className="text-sm font-medium text-gray-900 truncate">{chat.chatName}</p>
+                          <p className="text-xs text-gray-500">{chat.lastMessageTime}</p>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <p className="text-sm text-gray-500 truncate">{chat.lastMessage}</p>
+                          {chat.unreadCount > 0 && (
+                            <span className="inline-flex items-center justify-center h-5 w-5 rounded-full bg-indigo-600 text-xs font-medium text-white">
+                              {chat.unreadCount}
+                            </span>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </li>
-            ))}
+                  </li>
+                ))
+              )
+            }
+
           </ul>
         )}
       </div>
